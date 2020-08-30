@@ -105,6 +105,10 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
     },
@@ -137,5 +141,8 @@
       }
     }
   },
-  "defaultProject": "recipe-utilities"
+  "defaultProject": "recipe-utilities",
+  "cli": {
+    "analytics": false
+  }
 }
