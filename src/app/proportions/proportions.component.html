@@ -1,0 +1,23 @@
+<div class="mat-elevation-z8">
+  <mat-table class="full-width-table" aria-label="Elements" [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.weight}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="percentage">
+      <mat-header-cell *matHeaderCellDef>Percentage</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.percentage}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
