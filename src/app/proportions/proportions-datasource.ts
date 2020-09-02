@@ -10,6 +10,9 @@ export interface Ingredient {
   percentage: number;
 }
 
-export const EXAMPLE: Ingredient[] = [
-  { name: "Flour", weight: 0, percentage: 100 }
+export const DEFAULTS : Ingredient[] = [
+  { name: "Flour", weight: 0, percentage: 100 },
+  { name: "Water", weight: 0, percentage: 0 },
+  { name: "Yeast", weight: 0, percentage: 0 },
+  { name: "Salt", weight: 0, percentage: 0 }
 ]
