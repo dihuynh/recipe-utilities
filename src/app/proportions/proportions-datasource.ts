@@ -7,14 +7,14 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 export interface Ingredient {
   name: string;
   weight: number;
-  percentage: number;
+  percentage: string;
 }
 
 export const FLOUR: string = "Flour";
 
 export const DEFAULTS: Ingredient[] = [
-  { name: FLOUR, weight: 0, percentage: 100 },
-  { name: "Water", weight: 0, percentage: 0 },
-  { name: "Yeast", weight: 0, percentage: 0 },
-  { name: "Salt", weight: 0, percentage: 0 }
+  { name: FLOUR, weight: 0, percentage: '100' },
+  { name: "Water", weight: 0, percentage: '0' },
+  { name: "Yeast", weight: 0, percentage: '0' },
+  { name: "Salt", weight: 0, percentage: '0' }
 ]

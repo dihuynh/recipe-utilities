@@ -1,7 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
 import { Ingredient, DEFAULTS, FLOUR } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
@@ -16,6 +13,7 @@ export class ProportionsComponent implements OnInit {
   displayedColumns = ['name', 'weight', 'percentage'];
   public weightFormControl = new FormControl();
   public formGroup: FormGroup;
+  public recipeText: string = '';
 
   constructor(private fb: FormBuilder) {
   }
@@ -26,21 +24,28 @@ export class ProportionsComponent implements OnInit {
       this.formGroup.addControl(ing.name, new FormControl(ing.weight));
     });
 
-    this.formGroup.valueChanges.subscribe((values: any) => {
+    this.formGroup.valueChanges.subscribe((values) => {
       this.updatePercentages(values);
     });
   }
 
-  private updatePercentages(values: any) {
-    const flourWeight: number = this.formGroup.controls['Flour'].value;
-    Object.keys(this.formGroup.controls).forEach((controlName: string) => {
-      console.log('name', controlName);
-      if (name !== FLOUR){
+  public export() {
+    this.recipeText = '';
+    Object.keys(this.formGroup.value).forEach((ingName: string) => {
+      this.recipeText += this.formGroup.controls[ingName].value + ' g ' + ingName + '<br />';
+    });
+  }
+
+  private updatePercentages(values) {
+    const flourWeight: number = values[FLOUR];
+
+    Object.keys(values).forEach((controlName: string) => {
+      if (name !== FLOUR) {
         const ingWeight: number = this.formGroup.controls[controlName].value;
-        const percentage: number = ingWeight/flourWeight * 100;
+        const percentage: number = ingWeight / flourWeight * 100;
 
         let ing = this.dataSource.find((data: Ingredient) => data.name === controlName);
-        ing.percentage = percentage;
+        ing.percentage = percentage.toFixed(2);
       }
     });
   }
