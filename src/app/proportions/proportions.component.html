@@ -1,5 +1,7 @@
 <div [formGroup]="formGroup">
   Group: {{ formGroup.value | json }}
+  <br />
+  Datasource: {{ dataSource.filteredData | json }}
   <mat-table class="full-width-table mat-elevation-z2" style="margin-bottom: 10px" aria-label="Elements"
     [dataSource]="dataSource">
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -25,10 +27,13 @@
     </ng-container>
   </mat-table>
 
+  <button mat-stroked-button color="basic" style="margin-right: 10px;" aria-label="click to add another ingredient"
+    (click)="add()">
+    Add
+  </button>
   <button mat-flat-button color="primary" (click)="export()" style="margin-bottom: 10px;">
     Export
   </button>
 
-  <mat-card *ngIf="recipeText" style="max-width: 400px" [innerHTML]="recipeText">
-  </mat-card>
+  <mat-card *ngIf="recipeText" style="max-width: 400px" [innerHTML]="recipeText"></mat-card>
 </div>

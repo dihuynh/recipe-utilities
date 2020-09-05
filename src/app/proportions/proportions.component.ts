@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient, DEFAULTS, FLOUR } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-proportions',
@@ -8,25 +9,32 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./proportions.component.css']
 })
 export class ProportionsComponent implements OnInit {
-  public dataSource: Ingredient[] = DEFAULTS;
+  public dataSource: MatTableDataSource<Ingredient>;
 
   displayedColumns = ['name', 'weight', 'percentage'];
   public weightFormControl = new FormControl();
   public formGroup: FormGroup;
   public recipeText: string = '';
+  private ingredients: Ingredient[] = DEFAULTS;
 
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.formGroup = this.fb.group({});
-    this.dataSource.forEach((ing: Ingredient) => {
+    this.dataSource = new MatTableDataSource(this.ingredients);
+    this.ingredients.forEach((ing: Ingredient) => {
       this.formGroup.addControl(ing.name, new FormControl(ing.weight));
     });
 
     this.formGroup.valueChanges.subscribe((values) => {
       this.updatePercentages(values);
     });
+  }
+
+  public add() {
+    this.ingredients.push({ name: '', weight: 0, percentage: '0' });
+    this.dataSource = new MatTableDataSource(this.ingredients);
   }
 
   public export() {
@@ -44,7 +52,7 @@ export class ProportionsComponent implements OnInit {
         const ingWeight: number = this.formGroup.controls[controlName].value;
         const percentage: number = ingWeight / flourWeight * 100;
 
-        let ing = this.dataSource.find((data: Ingredient) => data.name === controlName);
+        let ing = this.ingredients.find((data: Ingredient) => data.name === controlName);
         ing.percentage = percentage.toFixed(2);
       }
     });
