@@ -1,0 +1,48 @@
+<div [formGroup]="formGroup">
+  <br />
+  <mat-table
+    class="full-width-table mat-elevation-z2"
+    style="margin-bottom: 10px"
+    aria-label="Elements"
+    formArrayName="array"
+    [dataSource]="dataSource">
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let row, let index = index"  [formGroup]="getIngredientFormGroup(index)">
+        <mat-form-field>
+          <input matInput formControlName="name">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
+      <mat-cell *matCellDef="let row, let index = index" [formGroup]="getIngredientFormGroup(index)">
+        <mat-form-field>
+          <input matInput formControlName="weight">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="percentage">
+      <mat-header-cell *matHeaderCellDef>Percentage</mat-header-cell>
+      <mat-cell *matCellDef="let row, let index = index">
+        <span>{{ getPercentage(index) }}%</span>
+      </mat-cell>
+    </ng-container>
+  </mat-table>
+
+  <button mat-stroked-button color="basic" style="margin-right: 10px;" aria-label="click to add another ingredient"
+    (click)="add()">
+    Add
+  </button>
+  <button mat-flat-button color="primary" (click)="export()" style="margin-bottom: 10px;">
+    Export
+  </button>
+
+  <mat-card *ngIf="recipeText" style="max-width: 400px" [innerHTML]="recipeText"></mat-card>
+</div>
