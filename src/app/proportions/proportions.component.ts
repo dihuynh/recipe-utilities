@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient, DEFAULTS, FLOUR } from './proportions-datasource';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+
+export interface IngredientFormGroupValue {
+  name: string;
+  weight: number;
+  percentage: string;
+}
 
 @Component({
   selector: 'app-proportions',
@@ -13,6 +19,7 @@ export class ProportionsComponent implements OnInit {
 
   displayedColumns = ['name', 'weight', 'percentage'];
   public weightFormControl = new FormControl();
+  public ingredientsFormArray: FormArray;
   public formGroup: FormGroup;
   public recipeText: string = '';
   private ingredients: Ingredient[] = DEFAULTS;
@@ -21,40 +28,48 @@ export class ProportionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formGroup = this.fb.group({});
+    this.ingredientsFormArray = this.fb.array([]);
+    this.formGroup = this.fb.group({
+      array: this.ingredientsFormArray
+    });
     this.dataSource = new MatTableDataSource(this.ingredients);
     this.ingredients.forEach((ing: Ingredient) => {
-      this.formGroup.addControl(ing.name, new FormControl(ing.weight));
-    });
-
-    this.formGroup.valueChanges.subscribe((values) => {
-      this.updatePercentages(values);
-    });
+      this.ingredientsFormArray.push(this.fb.group({
+        name: [ing.name],
+        weight: [ing.weight]
+      }));
+    })
   }
 
-  public add() {
-    this.ingredients.push({ name: '', weight: 0, percentage: '0' });
+  public add(): void {
+    this.ingredients.push({ name: '', weight: 0 });
+    this.ingredientsFormArray.push(this.fb.group({
+      name: [''],
+      weight: [0]
+    }));
     this.dataSource = new MatTableDataSource(this.ingredients);
   }
 
-  public export() {
+  public export(): void {
     this.recipeText = '';
-    Object.keys(this.formGroup.value).forEach((ingName: string) => {
-      this.recipeText += this.formGroup.controls[ingName].value + ' g ' + ingName + '<br />';
+    this.ingredientsFormArray.value.forEach((ing: IngredientFormGroupValue) => {
+      this.recipeText += ing.weight + ' g ' + ing.name + '<br />';
     });
   }
 
-  private updatePercentages(values) {
-    const flourWeight: number = values[FLOUR];
+  public getIngredientFormGroup(index: number): FormGroup {
+    return this.ingredientsFormArray.controls[index] as FormGroup;
+  }
 
-    Object.keys(values).forEach((controlName: string) => {
-      if (name !== FLOUR) {
-        const ingWeight: number = this.formGroup.controls[controlName].value;
-        const percentage: number = ingWeight / flourWeight * 100;
-
-        let ing = this.ingredients.find((data: Ingredient) => data.name === controlName);
-        ing.percentage = percentage.toFixed(2);
-      }
-    });
+  public getPercentage(index: number): string {
+    const formGroup: IngredientFormGroupValue = this.ingredientsFormArray.controls[index].value;
+    const flourWeight: AbstractControl = this.ingredientsFormArray.controls
+      .find((control: AbstractControl) => control.value.name === FLOUR);
+    if (flourWeight.value.weight === 0) {
+      return '';
+    }
+    const ingWeight: number = formGroup.weight;
+    const percentage: number = ingWeight / flourWeight.value.weight * 100;
+    return percentage.toFixed(0);
   }
 }

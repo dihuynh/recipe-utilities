@@ -31,6 +31,7 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatSortModule
   ],
+  exports: [ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })
