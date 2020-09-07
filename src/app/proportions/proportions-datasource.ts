@@ -14,6 +14,6 @@ export const FLOUR: string = "Flour";
 export const DEFAULTS: Ingredient[] = [
   { name: FLOUR, weight: 0 },
   { name: "Water", weight: 0 },
-  { name: "Yeast", weight: 0 },
+  { name: "Levain", weight: 0 },
   { name: "Salt", weight: 0 }
 ]
