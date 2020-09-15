@@ -1,18 +1,15 @@
+<h1 class="mat-h1">Proportions</h1>
 <div [formGroup]="formGroup">
   <br />
-  <mat-table
-    class="full-width-table mat-elevation-z2"
-    style="margin-bottom: 10px"
-    aria-label="Elements"
-    formArrayName="array"
-    [dataSource]="dataSource">
+  <mat-table class="full-width-table mat-elevation-z2" style="margin-bottom: 10px" aria-label="Elements"
+    formArrayName="array" [dataSource]="dataSource">
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-      <mat-cell *matCellDef="let row, let index = index"  [formGroup]="getIngredientFormGroup(index)">
+      <mat-cell *matCellDef="let row, let index = index" [formGroup]="getIngredientFormGroup(index)">
         <mat-form-field>
           <input matInput formControlName="name">
         </mat-form-field>
@@ -36,13 +33,18 @@
     </ng-container>
   </mat-table>
 
-  <button mat-stroked-button color="basic" style="margin-right: 10px;" aria-label="click to add another ingredient"
+  <button mat-flat-button color="primary" style="margin-right: 10px;" aria-label="click to add another ingredient"
     (click)="add()">
     Add
   </button>
-  <button mat-flat-button color="primary" (click)="export()" style="margin-bottom: 10px;">
+  <button mat-stroked-button color="basic" (click)="export()" style="margin-bottom: 10px; margin-right: 10px;">
     Export
   </button>
+  <button mat-stroked-button color="basic" (click)="setBaseScale()" style="margin-bottom: 10px; margin-right: 10px;">
+    Set base scale
+  </button>
+  <mat-slider style="width: 300px" max="2" min=".25" step=".25" thumbLabel title="Scale" tickInterval="1" [formControl]="scaleFormControl">
+  </mat-slider>
 
   <mat-card *ngIf="recipeText" style="max-width: 400px" [innerHTML]="recipeText"></mat-card>
 </div>

@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
+    MatSliderModule,
     MatButtonModule,
     MatSortModule
   ],
