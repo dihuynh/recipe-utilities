@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 export interface IngredientFormGroupValue {
   name: string;
   weight: number;
-  percentage: string;
 }
 
 @Component({
@@ -18,11 +17,12 @@ export class ProportionsComponent implements OnInit {
   public dataSource: MatTableDataSource<Ingredient>;
 
   displayedColumns = ['name', 'weight', 'percentage'];
-  public weightFormControl = new FormControl();
+  public scaleFormControl = new FormControl(1);
   public ingredientsFormArray: FormArray;
   public formGroup: FormGroup;
   public recipeText: string = '';
   private ingredients: Ingredient[] = DEFAULTS;
+  private ingredientsAtBaseScale: Map<string, number> = new Map();
 
   constructor(private fb: FormBuilder) {
   }
@@ -39,6 +39,18 @@ export class ProportionsComponent implements OnInit {
         weight: [ing.weight]
       }));
     })
+
+    this.scaleFormControl.valueChanges.subscribe((scale: number) => {
+      this.ingredientsFormArray.controls.forEach((group: FormGroup) => {
+        group.controls['weight'].setValue(this.ingredientsAtBaseScale.get(group.controls['name'].value) * scale);
+      });
+    });
+  }
+
+  public setBaseScale(): void {
+    this.ingredientsFormArray.value.forEach((value: IngredientFormGroupValue) => {
+      this.ingredientsAtBaseScale.set(value.name, value.weight);
+    });
   }
 
   public add(): void {

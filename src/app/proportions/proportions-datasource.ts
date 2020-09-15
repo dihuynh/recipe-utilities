@@ -12,8 +12,8 @@ export interface Ingredient {
 export const FLOUR: string = "Flour";
 
 export const DEFAULTS: Ingredient[] = [
-  { name: FLOUR, weight: 0 },
-  { name: "Water", weight: 0 },
-  { name: "Levain", weight: 0 },
-  { name: "Salt", weight: 0 }
+  { name: FLOUR, weight: 100 },
+  { name: "Water", weight: 75 },
+  { name: "Levain", weight: 20 },
+  { name: "Salt", weight: 2 }
 ]
