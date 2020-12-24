@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MatCardModule,
     MatSliderModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatSortModule
   ],
   exports: [ReactiveFormsModule],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ingredient, DEFAULTS, FLOUR } from './proportions-datasource';
+import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -21,7 +21,9 @@ export class ProportionsComponent implements OnInit {
   public ingredientsFormArray: FormArray;
   public formGroup: FormGroup;
   public recipeText: string = '';
-  private ingredients: Ingredient[] = DEFAULTS;
+  public PRESETS: Preset[] = PRESETS;
+  public presetFormControl: FormControl = new FormControl();
+
   private ingredientsAtBaseScale: Map<string, number> = new Map();
 
   constructor(private fb: FormBuilder) {
@@ -32,8 +34,16 @@ export class ProportionsComponent implements OnInit {
     this.formGroup = this.fb.group({
       array: this.ingredientsFormArray
     });
-    this.dataSource = new MatTableDataSource(this.ingredients);
-    this.ingredients.forEach((ing: Ingredient) => {
+    this.presetFormControl.valueChanges.subscribe((newPreset: Preset) => {
+      this.initializeArray(newPreset.recipe);
+    });
+    this.presetFormControl.setValue(PRESETS[0]);
+  }
+
+  private initializeArray(recipe: Ingredient[]) {
+    this.ingredientsFormArray.controls = [];
+    this.dataSource = new MatTableDataSource(recipe);
+    recipe.forEach((ing: Ingredient) => {
       this.ingredientsFormArray.push(this.fb.group({
         name: [ing.name],
         weight: [ing.weight]
@@ -54,12 +64,11 @@ export class ProportionsComponent implements OnInit {
   }
 
   public add(): void {
-    this.ingredients.push({ name: '', weight: 0 });
     this.ingredientsFormArray.push(this.fb.group({
       name: [''],
       weight: [0]
     }));
-    this.dataSource = new MatTableDataSource(this.ingredients);
+    this.dataSource = new MatTableDataSource(this.ingredientsFormArray.value);
   }
 
   public export(): void {
