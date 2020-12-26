@@ -29,6 +29,7 @@ export class ProportionsComponent implements OnInit {
   public presetFormControl: FormControl = new FormControl();
 
   private ingredientsAtBaseScale: Map<string, number> = new Map();
+  private flourFormGroup: FormGroup = new FormGroup({});
 
   constructor(private fb: FormBuilder) {
   }
@@ -52,11 +53,16 @@ export class ProportionsComponent implements OnInit {
   private setIngredients(recipe: Ingredient[]) {
     this.ingredientsFormArray.controls = [];
     recipe.forEach((ing: Ingredient) => {
-      this.ingredientsFormArray.push(this.fb.group({
+      let formGroup: FormGroup = this.fb.group({
         name: [ing.name],
         weight: [ing.weight]
-      }));
-    })
+      });
+      this.ingredientsFormArray.push(formGroup);
+      if (ing.name === FLOUR) {
+        this.flourFormGroup = formGroup;
+        formGroup.get('name').disable();
+      }
+    });
     this.dataSource = new MatTableDataSource(recipe);
   }
 
@@ -88,13 +94,11 @@ export class ProportionsComponent implements OnInit {
 
   public getPercentage(index: number): string {
     const formGroup: IngredientFormValue = this.ingredientsFormArray.controls[index].value;
-    const flourWeight: AbstractControl = this.ingredientsFormArray.controls
-      .find((control: AbstractControl) => control.value.name === FLOUR);
-    if (flourWeight.value.weight === 0) {
+    if (this.flourFormGroup.value.weight === 0) {
       return '';
     }
     const ingWeight: number = formGroup.weight;
-    const percentage: number = ingWeight / flourWeight.value.weight * 100;
+    const percentage: number = ingWeight / this.flourFormGroup.value.weight * 100;
     return percentage.toFixed(0);
   }
 }
