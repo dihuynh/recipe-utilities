@@ -3,9 +3,13 @@ import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 
-export interface IngredientFormGroupValue {
+export interface IngredientFormValue {
   name: string;
   weight: number;
+}
+
+export interface FormGroupValue {
+  array: IngredientFormValue[];
 }
 
 @Component({
@@ -35,21 +39,9 @@ export class ProportionsComponent implements OnInit {
       array: this.ingredientsFormArray
     });
     this.presetFormControl.valueChanges.subscribe((newPreset: Preset) => {
-      this.initializeArray(newPreset.recipe);
+      this.setIngredients(newPreset.recipe);
     });
     this.presetFormControl.setValue(PRESETS[0]);
-  }
-
-  private initializeArray(recipe: Ingredient[]) {
-    this.ingredientsFormArray.controls = [];
-    this.dataSource = new MatTableDataSource(recipe);
-    recipe.forEach((ing: Ingredient) => {
-      this.ingredientsFormArray.push(this.fb.group({
-        name: [ing.name],
-        weight: [ing.weight]
-      }));
-    })
-
     this.scaleFormControl.valueChanges.subscribe((scale: number) => {
       this.ingredientsFormArray.controls.forEach((group: FormGroup) => {
         group.controls['weight'].setValue(this.ingredientsAtBaseScale.get(group.controls['name'].value) * scale);
@@ -57,10 +49,22 @@ export class ProportionsComponent implements OnInit {
     });
   }
 
+  private setIngredients(recipe: Ingredient[]) {
+    this.ingredientsFormArray.controls = [];
+    recipe.forEach((ing: Ingredient) => {
+      this.ingredientsFormArray.push(this.fb.group({
+        name: [ing.name],
+        weight: [ing.weight]
+      }));
+    })
+    this.dataSource = new MatTableDataSource(recipe);
+  }
+
   public setBaseScale(): void {
-    this.ingredientsFormArray.value.forEach((value: IngredientFormGroupValue) => {
+    this.ingredientsFormArray.value.forEach((value: IngredientFormValue) => {
       this.ingredientsAtBaseScale.set(value.name, value.weight);
     });
+    this.dataSource = new MatTableDataSource(this.ingredientsFormArray.value);
   }
 
   public add(): void {
@@ -73,7 +77,7 @@ export class ProportionsComponent implements OnInit {
 
   public export(): void {
     this.recipeText = '';
-    this.ingredientsFormArray.value.forEach((ing: IngredientFormGroupValue) => {
+    this.ingredientsFormArray.value.forEach((ing: IngredientFormValue) => {
       this.recipeText += ing.weight + ' g ' + ing.name + '<br />';
     });
   }
@@ -83,7 +87,7 @@ export class ProportionsComponent implements OnInit {
   }
 
   public getPercentage(index: number): string {
-    const formGroup: IngredientFormGroupValue = this.ingredientsFormArray.controls[index].value;
+    const formGroup: IngredientFormValue = this.ingredientsFormArray.controls[index].value;
     const flourWeight: AbstractControl = this.ingredientsFormArray.controls
       .find((control: AbstractControl) => control.value.name === FLOUR);
     if (flourWeight.value.weight === 0) {
