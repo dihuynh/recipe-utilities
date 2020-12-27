@@ -110,4 +110,10 @@ export class ProportionsComponent implements OnInit {
     const percentage: number = ingWeight / this.flourFormGroup.value.weight * 100;
     return percentage.toFixed(0);
   }
+
+  public setBaseScale(): void {
+    this.ingredientsFormArray.value.forEach((value: IngredientFormValue) => {
+      this.ingredientsAtBaseScale.set(value.name, value.weight);
+    });
+  }
 }
