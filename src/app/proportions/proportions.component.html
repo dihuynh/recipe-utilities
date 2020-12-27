@@ -1,4 +1,13 @@
 <h1 class="mat-h1">Proportions</h1>
+<mat-button-toggle-group name="presets" aria-label="Presets" style="margin-bottom: 10px"
+  [formControl]="presetFormControl">
+  <mat-button-toggle *ngFor="let preset of PRESETS" [value]="preset">
+    {{ preset.name }}
+  </mat-button-toggle>
+</mat-button-toggle-group>
+
+<br/>
+
 <div [formGroup]="formGroup">
   <br />
   <mat-table class="full-width-table mat-elevation-z2" style="margin-bottom: 10px" aria-label="Elements"
