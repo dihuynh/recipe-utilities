@@ -23,10 +23,10 @@ export class ProportionsComponent implements OnInit {
   displayedColumns = ['name', 'weight', 'percentage'];
   public scaleFormControl = new FormControl(1);
   public ingredientsFormArray: FormArray;
+  public presetFormControl: FormControl = new FormControl();
   public formGroup: FormGroup;
   public recipeText: string = '';
   public PRESETS: Preset[] = PRESETS;
-  public presetFormControl: FormControl = new FormControl();
 
   private ingredientsAtBaseScale: Map<string, number> = new Map();
   private flourFormGroup: FormGroup = new FormGroup({});
@@ -39,10 +39,12 @@ export class ProportionsComponent implements OnInit {
     this.formGroup = this.fb.group({
       array: this.ingredientsFormArray
     });
-    this.presetFormControl.valueChanges.subscribe((newPreset: Preset) => {
-      this.setIngredients(newPreset.recipe);
-    });
+    this.updateIngredientsWhenPresetChanges();
+    this.updateIngredientsWhenScaleChanges();
     this.presetFormControl.setValue(PRESETS[0]);
+  }
+
+  private updateIngredientsWhenScaleChanges() {
     this.scaleFormControl.valueChanges.subscribe((scale: number) => {
       this.ingredientsFormArray.controls.forEach((group: FormGroup) => {
         group.controls['weight'].setValue(this.ingredientsAtBaseScale.get(group.controls['name'].value) * scale);
@@ -50,27 +52,34 @@ export class ProportionsComponent implements OnInit {
     });
   }
 
-  private setIngredients(recipe: Ingredient[]) {
+  private updateIngredientsWhenPresetChanges() {
+    this.presetFormControl.valueChanges.subscribe((newPreset: Preset) => {
+      this.setIngredients(newPreset.recipe);
+    });
+  }
+
+  private setIngredients(recipe: Ingredient[]): void {
     this.ingredientsFormArray.controls = [];
+    this.addIngredientFromRecipe(recipe);
+    this.dataSource = new MatTableDataSource(recipe);
+  }
+
+  private addIngredientFromRecipe(recipe: Ingredient[]): void {
     recipe.forEach((ing: Ingredient) => {
       let formGroup: FormGroup = this.fb.group({
         name: [ing.name],
         weight: [ing.weight]
       });
       this.ingredientsFormArray.push(formGroup);
-      if (ing.name === FLOUR) {
-        this.flourFormGroup = formGroup;
-        formGroup.get('name').disable();
-      }
+      this.disableIfFlour(ing, formGroup);
     });
-    this.dataSource = new MatTableDataSource(recipe);
   }
 
-  public setBaseScale(): void {
-    this.ingredientsFormArray.value.forEach((value: IngredientFormValue) => {
-      this.ingredientsAtBaseScale.set(value.name, value.weight);
-    });
-    this.dataSource = new MatTableDataSource(this.ingredientsFormArray.value);
+  private disableIfFlour(ing: Ingredient, formGroup: FormGroup): void {
+    if (ing.name === FLOUR) {
+      this.flourFormGroup = formGroup;
+      formGroup.get('name').disable();
+    }
   }
 
   public add(): void {
