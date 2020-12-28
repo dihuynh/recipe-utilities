@@ -4,15 +4,16 @@
     "outDir": "../out-tsc/spec",
     "types": [
       "jasmine",
-      "node"
-    ]
+      "node",
+      "typescript"
+    ],
+    "typeRoots": ["./node_modules/@types/"]
   },
   "files": [
     "test.ts",
     "polyfills.ts"
   ],
   "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
+    "**/*.spec.ts"
   ]
 }

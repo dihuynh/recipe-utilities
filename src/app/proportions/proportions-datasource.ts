@@ -8,32 +8,32 @@ export interface Preset {
   recipe: Ingredient[];
 }
 
-export const FLOUR: string = "Flour";
+export const FLOUR: string = "flour";
 
 export const SOURDOUGH_RECIPE: Ingredient[] = [
   { name: FLOUR, weight: 500 },
-  { name: "Water", weight: 375 },
-  { name: "Levain", weight: 100 },
-  { name: "Salt", weight: 10 }
+  { name: "water", weight: 375 },
+  { name: "levain", weight: 100 },
+  { name: "salt", weight: 10 }
 ]
 
 export const BRIOCHE_RECIPE: Ingredient[] = [
   { name: FLOUR, weight: 500 },
-  { name: "Liquid", weight: 375 },
-  { name: "Levain", weight: 100 },
-  { name: "Sugar", weight: 100 },
-  { name: "Butter", weight: 100 },
-  { name: "Egg", weight: 10 },
-  { name: "Salt", weight: 10 }
+  { name: "liquid", weight: 375 },
+  { name: "levain", weight: 100 },
+  { name: "sugar", weight: 100 },
+  { name: "butter", weight: 100 },
+  { name: "egg", weight: 10 },
+  { name: "salt", weight: 10 }
 ]
 
 export const WHITE_BREAD_RECIPE: Ingredient[] = [
   { name: FLOUR, weight: 500 },
-  { name: "Liquid", weight: 375 },
-  { name: "Levain", weight: 100 },
-  { name: "Sugar", weight: 100 },
-  { name: "Butter", weight: 100 },
-  { name: "Salt", weight: 10 }
+  { name: "liquid", weight: 375 },
+  { name: "levain", weight: 100 },
+  { name: "sugar", weight: 100 },
+  { name: "butter", weight: 100 },
+  { name: "salt", weight: 10 }
 ]
 
 export const PRESETS: Preset[] = [
