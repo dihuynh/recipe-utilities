@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { toRecipeText, toIngredients } from './recipe-converter';
 
 export interface IngredientFormValue {
   name: string;
@@ -25,7 +26,7 @@ export class ProportionsComponent implements OnInit {
   public ingredientsFormArray: FormArray;
   public presetFormControl: FormControl = new FormControl();
   public formGroup: FormGroup;
-  public recipeText: string = '';
+  public recipeText: FormControl = new FormControl();
   public PRESETS: Preset[] = PRESETS;
 
   private ingredientsAtBaseScale: Map<string, number> = new Map();
@@ -91,10 +92,11 @@ export class ProportionsComponent implements OnInit {
   }
 
   public export(): void {
-    this.recipeText = '';
-    this.ingredientsFormArray.value.forEach((ing: IngredientFormValue) => {
-      this.recipeText += ing.weight + ' g ' + ing.name + '<br />';
-    });
+    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.getRawValue()));
+  }
+
+  public import(): void {
+    this.setIngredients(toIngredients(this.recipeText.value));
   }
 
   public getIngredientFormGroup(index: number): FormGroup {

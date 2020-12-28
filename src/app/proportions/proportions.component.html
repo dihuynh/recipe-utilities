@@ -6,7 +6,7 @@
   </mat-button-toggle>
 </mat-button-toggle-group>
 
-<br/>
+<br />
 
 <div [formGroup]="formGroup">
   <br />
@@ -42,18 +42,29 @@
     </ng-container>
   </mat-table>
 
-  <button mat-flat-button color="primary" style="margin-right: 10px;" aria-label="click to add another ingredient"
-    (click)="add()">
-    Add
-  </button>
-  <button mat-stroked-button color="basic" (click)="export()" style="margin-bottom: 10px; margin-right: 10px;">
-    Export
-  </button>
-  <button mat-stroked-button color="basic" (click)="setBaseScale()" style="margin-bottom: 10px; margin-right: 10px;">
-    Set base scale
-  </button>
-  <mat-slider style="width: 300px" max="2" min=".25" step=".25" thumbLabel title="Scale" tickInterval="1" [formControl]="scaleFormControl">
-  </mat-slider>
+  <div>
+    <button mat-flat-button color="primary" style="margin-right: 10px;" aria-label="click to add another ingredient"
+      (click)="add()">
+      Add
+    </button>
+    <button mat-stroked-button color="basic" (click)="import()" style="margin-bottom: 10px; margin-right: 10px;">
+      Import
+    </button>
+    <button mat-stroked-button color="basic" (click)="export()" style="margin-bottom: 10px; margin-right: 10px;">
+      Export
+    </button>
+    <button mat-stroked-button color="basic" (click)="setBaseScale()" style="margin-bottom: 10px; margin-right: 10px;">
+      Set base scale
+    </button>
+    <mat-slider style="width: 300px" max="2" min=".25" step=".25" thumbLabel title="Scale" tickInterval="1"
+      [formControl]="scaleFormControl">
+    </mat-slider>
+  </div>
 
-  <mat-card *ngIf="recipeText" style="max-width: 400px" [innerHTML]="recipeText"></mat-card>
+  <div>
+    <mat-form-field>
+      <mat-label>Recipe text</mat-label>
+      <textarea matInput cdkTextareaAutosize [formControl]="recipeText"></textarea>
+    </mat-form-field>
+  </div>
 </div>
