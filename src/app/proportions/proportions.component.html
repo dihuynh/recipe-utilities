@@ -18,7 +18,7 @@
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-      <mat-cell *matCellDef="let row, let index = index" [formGroup]="getIngredientFormGroup(index)">
+      <mat-cell *matCellDef="let row, let index = index" [formGroupName]="index">
         <mat-form-field>
           <input matInput formControlName="name">
         </mat-form-field>
@@ -27,7 +27,7 @@
 
     <ng-container matColumnDef="weight">
       <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-      <mat-cell *matCellDef="let row, let index = index" [formGroup]="getIngredientFormGroup(index)">
+      <mat-cell *matCellDef="let row, let index = index" [formGroupName]="index">
         <mat-form-field>
           <input matInput formControlName="weight">
         </mat-form-field>
@@ -37,7 +37,7 @@
     <ng-container matColumnDef="percentage">
       <mat-header-cell *matHeaderCellDef>Percentage</mat-header-cell>
       <mat-cell *matCellDef="let row, let index = index">
-        <span>{{ getPercentage(index) }}%</span>
+        <span>{{ row.percentage }}%</span>
       </mat-cell>
     </ng-container>
   </mat-table>
