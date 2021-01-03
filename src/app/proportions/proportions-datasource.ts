@@ -1,6 +1,7 @@
 export interface Ingredient {
   name: string;
   weight: number;
+  percentage?: string;
 }
 
 export interface Preset {

@@ -62,7 +62,14 @@ export class ProportionsComponent implements OnInit {
   private setIngredients(recipe: Ingredient[]): void {
     this.ingredientsFormArray.controls = [];
     this.addIngredientFromRecipe(recipe);
-    this.dataSource = new MatTableDataSource(recipe);
+    this.updateDataSource(recipe);
+  }
+
+  private updateDataSource(ingredients: Ingredient[]) {
+    ingredients.forEach((ing: Ingredient) => {
+      ing.percentage = this.getPercentage(ing.weight);
+    });
+    this.dataSource = new MatTableDataSource(ingredients);
   }
 
   private addIngredientFromRecipe(recipe: Ingredient[]): void {
@@ -72,14 +79,13 @@ export class ProportionsComponent implements OnInit {
         weight: [ing.weight]
       });
       this.ingredientsFormArray.push(formGroup);
-      this.disableIfFlour(ing, formGroup);
+      this.setFlourFormGroup(ing, formGroup);
     });
   }
 
-  private disableIfFlour(ing: Ingredient, formGroup: FormGroup): void {
+  private setFlourFormGroup(ing: Ingredient, formGroup: FormGroup): void {
     if (ing.name === FLOUR) {
       this.flourFormGroup = formGroup;
-      formGroup.get('name').disable();
     }
   }
 
@@ -88,27 +94,21 @@ export class ProportionsComponent implements OnInit {
       name: [''],
       weight: [0]
     }));
-    this.dataSource = new MatTableDataSource(this.ingredientsFormArray.value);
+    this.updateDataSource(this.ingredientsFormArray.value);
   }
 
   public export(): void {
-    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.getRawValue()));
+    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.value));
   }
 
   public import(): void {
     this.setIngredients(toIngredients(this.recipeText.value));
   }
 
-  public getIngredientFormGroup(index: number): FormGroup {
-    return this.ingredientsFormArray.controls[index] as FormGroup;
-  }
-
-  public getPercentage(index: number): string {
-    const formGroup: IngredientFormValue = this.ingredientsFormArray.controls[index].value;
+  private getPercentage(ingWeight: number): string {
     if (this.flourFormGroup.value.weight === 0) {
       return '';
     }
-    const ingWeight: number = formGroup.weight;
     const percentage: number = ingWeight / this.flourFormGroup.value.weight * 100;
     return percentage.toFixed(0);
   }
