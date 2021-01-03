@@ -72,14 +72,13 @@ export class ProportionsComponent implements OnInit {
         weight: [ing.weight]
       });
       this.ingredientsFormArray.push(formGroup);
-      this.disableIfFlour(ing, formGroup);
+      this.setFlourFormGroup(ing, formGroup);
     });
   }
 
-  private disableIfFlour(ing: Ingredient, formGroup: FormGroup): void {
+  private setFlourFormGroup(ing: Ingredient, formGroup: FormGroup): void {
     if (ing.name === FLOUR) {
       this.flourFormGroup = formGroup;
-      formGroup.get('name').disable();
     }
   }
 
@@ -92,7 +91,7 @@ export class ProportionsComponent implements OnInit {
   }
 
   public export(): void {
-    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.getRawValue()));
+    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.value));
   }
 
   public import(): void {
