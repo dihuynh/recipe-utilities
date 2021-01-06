@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { toRecipeText, toIngredients } from './recipe-converter';
+import { toRecipeText, toIngredientsFromFormValues, toIngredientsFromRecipeTex } from './recipe-converter';
 
 export interface IngredientFormValue {
   name: string;
@@ -36,16 +36,23 @@ export class ProportionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ingredientsFormArray = this.fb.array([]);
+    this.ingredientsFormArray = this.fb.array([], { updateOn: 'blur' });
     this.formGroup = this.fb.group({
       array: this.ingredientsFormArray
     });
-    this.updateIngredientsWhenPresetChanges();
-    this.updateIngredientsWhenScaleChanges();
+    this.updateWhenPresetChanges();
+    this.updateWhenScaleChanges();
+    this.updateWhenWeightChanges();
     this.presetFormControl.setValue(PRESETS[0]);
   }
 
-  private updateIngredientsWhenScaleChanges() {
+  private updateWhenWeightChanges() {
+    this.ingredientsFormArray.valueChanges.subscribe((formArrayValue: IngredientFormValue[]) => {
+      this.updateDataSource(toIngredientsFromFormValues(formArrayValue));
+    });
+  }
+
+  private updateWhenScaleChanges() {
     this.scaleFormControl.valueChanges.subscribe((scale: number) => {
       this.ingredientsFormArray.controls.forEach((group: FormGroup) => {
         group.controls['weight'].setValue(this.ingredientsAtBaseScale.get(group.controls['name'].value) * scale);
@@ -53,7 +60,7 @@ export class ProportionsComponent implements OnInit {
     });
   }
 
-  private updateIngredientsWhenPresetChanges() {
+  private updateWhenPresetChanges() {
     this.presetFormControl.valueChanges.subscribe((newPreset: Preset) => {
       this.setIngredients(newPreset.recipe);
     });
@@ -63,6 +70,7 @@ export class ProportionsComponent implements OnInit {
     this.ingredientsFormArray.controls = [];
     this.addIngredientFromRecipe(recipe);
     this.updateDataSource(recipe);
+    this.setBaseScale();
   }
 
   private updateDataSource(ingredients: Ingredient[]) {
@@ -102,7 +110,7 @@ export class ProportionsComponent implements OnInit {
   }
 
   public import(): void {
-    this.setIngredients(toIngredients(this.recipeText.value));
+    this.setIngredients(toIngredientsFromRecipeTex(this.recipeText.value));
   }
 
   private getPercentage(ingWeight: number): string {
@@ -113,7 +121,7 @@ export class ProportionsComponent implements OnInit {
     return percentage.toFixed(0);
   }
 
-  public setBaseScale(): void {
+  private setBaseScale(): void {
     this.ingredientsFormArray.value.forEach((value: IngredientFormValue) => {
       this.ingredientsAtBaseScale.set(value.name, value.weight);
     });
