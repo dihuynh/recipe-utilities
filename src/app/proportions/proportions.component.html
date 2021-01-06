@@ -20,7 +20,7 @@
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let row, let index = index" [formGroupName]="index">
         <mat-form-field>
-          <input matInput formControlName="name">
+          <input id="name-input-{{index}}" matInput formControlName="name">
         </mat-form-field>
       </mat-cell>
     </ng-container>
@@ -29,7 +29,7 @@
       <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
       <mat-cell *matCellDef="let row, let index = index" [formGroupName]="index">
         <mat-form-field>
-          <input matInput formControlName="weight">
+          <input id="weight-input-{{index}}" matInput type="number" formControlName="weight">
         </mat-form-field>
       </mat-cell>
     </ng-container>
@@ -37,7 +37,7 @@
     <ng-container matColumnDef="percentage">
       <mat-header-cell *matHeaderCellDef>Percentage</mat-header-cell>
       <mat-cell *matCellDef="let row, let index = index">
-        <span>{{ row.percentage }}%</span>
+        <span id="percentage-{{index}}">{{ row.percentage }}%</span>
       </mat-cell>
     </ng-container>
   </mat-table>
@@ -52,9 +52,6 @@
     </button>
     <button mat-stroked-button color="basic" (click)="export()" style="margin-bottom: 10px; margin-right: 10px;">
       Export
-    </button>
-    <button mat-stroked-button color="basic" (click)="setBaseScale()" style="margin-bottom: 10px; margin-right: 10px;">
-      Set base scale
     </button>
     <mat-slider style="width: 300px" max="2" min=".25" step=".25" thumbLabel title="Scale" tickInterval="1"
       [formControl]="scaleFormControl">
