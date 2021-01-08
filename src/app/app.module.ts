@@ -14,6 +14,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatListModule } from '@angular/material/list';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +36,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSliderModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatListModule,
+    FlexLayoutModule,
     MatSortModule
   ],
   exports: [ReactiveFormsModule],
