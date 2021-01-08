@@ -38,12 +38,13 @@ export class ProportionsComponent implements OnInit {
   ngOnInit() {
     this.ingredientsFormArray = this.fb.array([], { updateOn: 'blur' });
     this.formGroup = this.fb.group({
-      array: this.ingredientsFormArray
+      array: this.ingredientsFormArray,
+      preset: this.presetFormControl
     });
     this.updateWhenPresetChanges();
     this.updateWhenScaleChanges();
     this.updateWhenWeightChanges();
-    this.presetFormControl.setValue(PRESETS[0]);
+    this.presetFormControl.setValue([PRESETS[0]]);
   }
 
   private updateWhenWeightChanges() {
@@ -61,8 +62,8 @@ export class ProportionsComponent implements OnInit {
   }
 
   private updateWhenPresetChanges() {
-    this.presetFormControl.valueChanges.subscribe((newPreset: Preset) => {
-      this.setIngredients(newPreset.recipe);
+    this.presetFormControl.valueChanges.subscribe((newPreset: Preset[]) => {
+      this.setIngredients(newPreset[0].recipe);
     });
   }
 
