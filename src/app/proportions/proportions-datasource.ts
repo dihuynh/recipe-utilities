@@ -12,8 +12,8 @@ export interface Preset {
 export const FLOUR: string = "flour";
 
 export const SOURDOUGH_RECIPE: Ingredient[] = [
-  { name: FLOUR, weight: 500, percentage: '100' },
   { name: "water", weight: 375, percentage: '75' },
+  { name: "bread flour", weight: 500, percentage: '100' },
   { name: "levain", weight: 100, percentage: '20' },
   { name: "salt", weight: 10, percentage: '2' }
 ]

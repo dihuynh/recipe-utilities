@@ -15,19 +15,19 @@ import { ProportionsComponentPage } from './proportion-component.page';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRowHarness } from '@angular/material/table/testing';
-import { SOURDOUGH_RECIPE, Ingredient } from './proportions-datasource';
+import { SOURDOUGH_RECIPE, Ingredient, FLOUR } from './proportions-datasource';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { toRecipeText } from './recipe-converter';
 import { MatSliderHarness } from '@angular/material/slider/testing';
+import { MatSelectionList, MatListModule } from '@angular/material/list';
 
 describe('ProportionsComponent', () => {
   let component: ProportionsComponent;
   let page: ProportionsComponentPage;
   let loader: HarnessLoader;
   let fixture: ComponentFixture<ProportionsComponent>;
-  const nonFlourIngredients: Ingredient[] = SOURDOUGH_RECIPE.slice(1);
-  const flourWeight: number = SOURDOUGH_RECIPE[0].weight;
+  const flourWeight: number = SOURDOUGH_RECIPE[1].weight;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,6 +41,7 @@ describe('ProportionsComponent', () => {
         ReactiveFormsModule,
         MatInputModule,
         MatCardModule,
+        MatListModule,
         MatSliderModule,
         MatButtonModule,
         MatButtonToggleModule,
@@ -62,20 +63,22 @@ describe('ProportionsComponent', () => {
   });
 
   it('changing a non-flour ingredient weight should reflect in changing its percentage', () => {
-    nonFlourIngredients.forEach((ing: Ingredient, index: number) => {
-      // index + 1 because array doesnt include flour
-      page.setWeightOnRow(index + 1, ing.weight * 2);
-      expect(page.ingredientPercentageOnRow(index + 1)).toEqual(`${Number(ing.percentage) * 2}%`);
+    SOURDOUGH_RECIPE.forEach((ing: Ingredient, index: number) => {
+      if (ing.name.includes(FLOUR) == false) {
+        page.setWeightOnRow(index, ing.weight * 2);
+        expect(page.ingredientPercentageOnRow(index)).toEqual(`${Number(ing.percentage) * 2}%`);
+      }
     });
   });
 
   it('changing flour weight should change other ingredients percentages', () => {
-    page.setWeightOnRow(0, flourWeight / 2);
+    page.setWeightOnRow(1, flourWeight / 2);
 
-    nonFlourIngredients.forEach((ing: Ingredient, index: number) => {
-      // since flour was halved, each ing should be double the old percentage
-      // index + 1 because array doesnt include flour
-      expect(page.ingredientPercentageOnRow(index + 1)).toEqual(`${Number(ing.percentage) * 2}%`);
+    SOURDOUGH_RECIPE.forEach((ing: Ingredient, index: number) => {
+      if (ing.name.includes(FLOUR) == false){
+        // since flour was halved, each ing should be double the old percentage
+        expect(page.ingredientPercentageOnRow(index)).toEqual(`${Number(ing.percentage) * 2}%`);
+      }
     });
   });
 

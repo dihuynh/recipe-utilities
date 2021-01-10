@@ -93,7 +93,7 @@ export class ProportionsComponent implements OnInit {
   }
 
   private setFlourFormGroup(ing: Ingredient, formGroup: FormGroup): void {
-    if (ing.name === FLOUR) {
+    if (ing.name.includes(FLOUR)) {
       this.flourFormGroup = formGroup;
     }
   }
