@@ -16,12 +16,14 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SourdoughTrackerComponent } from './sourdough-tracker/sourdough-tracker.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProportionsComponent
+    ProportionsComponent,
+    SourdoughTrackerComponent
   ],
   imports: [
     BrowserModule,
