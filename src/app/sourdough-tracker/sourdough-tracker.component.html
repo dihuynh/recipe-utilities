@@ -1,1 +1,10 @@
-<p>sourdough-tracker works!</p>
+<h1 class="mat-h1">Sourdough tracker</h1>
+
+<mat-vertical-stepper #stepper>
+  <mat-step *ngFor="let step of steps">
+    <ng-template matStepLabel>{{ step.title }}</ng-template>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>

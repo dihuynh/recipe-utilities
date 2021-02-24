@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BASIC_STEPS, Step } from './default-data';
 
 @Component({
   selector: 'sourdough-tracker',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sourdough-tracker.component.css']
 })
 export class SourdoughTrackerComponent implements OnInit {
+  public steps: Step[] = BASIC_STEPS;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

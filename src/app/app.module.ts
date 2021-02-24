@@ -17,6 +17,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SourdoughTrackerComponent } from './sourdough-tracker/sourdough-tracker.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { SourdoughTrackerComponent } from './sourdough-tracker/sourdough-tracker
     SourdoughTrackerComponent
   ],
   imports: [
+    MatStepperModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
