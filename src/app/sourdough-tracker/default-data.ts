@@ -1,60 +1,48 @@
-export interface Step {
+export interface StepDefinition {
   title: string;
-  startTime?: Date;
-  startingDuration: number; // in minutes
-  actualDuration: number // in minutes
+  durationInMinutes: number;
 }
 
-export const BASIC_STEPS: Step[] = [
+export const BASIC_STEPS: StepDefinition[] = [
   {
     title: 'Autolyse',
-    startingDuration: 360,
-    actualDuration: 0,
+    durationInMinutes: 180
   },
   {
     title: 'Levain mix',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   },
   {
     title: 'Salt mix',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   },
   {
     title: 'Lamination',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   },
   {
     title: 'Stretch/Fold',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   },
   {
     title: 'Stretch/Fold',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   },
   {
     title: 'Stretch/Fold',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   },
   {
     title: 'Stretch/Fold',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   },
   {
     title: 'Bulk rest',
-    startingDuration: 60,
-    actualDuration: 0,
+    durationInMinutes: 60
   },
   {
     title: 'Preshape',
-    startingDuration: 30,
-    actualDuration: 0,
+    durationInMinutes: 30
   }
 ];
 

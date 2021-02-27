@@ -18,13 +18,14 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SourdoughTrackerComponent } from './sourdough-tracker/sourdough-tracker.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { CdTimerModule } from 'angular-cd-timer';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ProportionsComponent,
-    SourdoughTrackerComponent
+    SourdoughTrackerComponent,
   ],
   imports: [
     MatStepperModule,
@@ -42,7 +43,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatButtonToggleModule,
     MatListModule,
     FlexLayoutModule,
-    MatSortModule
+    MatSortModule,
+    CdTimerModule
   ],
   exports: [ReactiveFormsModule],
   providers: [],

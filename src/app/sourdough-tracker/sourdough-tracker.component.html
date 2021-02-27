@@ -1,10 +1,16 @@
 <h1 class="mat-h1">Sourdough tracker</h1>
 
 <mat-vertical-stepper #stepper>
-  <mat-step *ngFor="let step of steps">
+  <mat-step *ngFor="let step of steps; index as i">
     <ng-template matStepLabel>{{ step.title }}</ng-template>
+    <cd-timer
+      [startTime]="step.durationInMinutes * 60"
+      [autoStart]="false"
+      [countdown]="true"
+      format="intelli">
+    </cd-timer>
     <div>
-      <button mat-button matStepperNext>Next</button>
+      <button mat-raised-button color="primary" matStepperNext (click)="next(i)">Next</button>
     </div>
   </mat-step>
 </mat-vertical-stepper>
