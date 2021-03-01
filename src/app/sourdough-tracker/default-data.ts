@@ -14,11 +14,11 @@ export const BASIC_STEPS: StepDefinition[] = [
   {
     title: 'Autolyse'
   },
-  makeWaitStep(45),
+  makeWaitStep(.05),
   {
     title: 'Levain mix'
   },
-  makeWaitStep(30),
+  makeWaitStep(.05),
   {
     title: 'Salt mix'
   },

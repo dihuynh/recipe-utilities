@@ -4,7 +4,7 @@
   <mat-step *ngFor="let step of steps; index as i">
     <ng-template matStepLabel>{{ step.definition.title }}</ng-template>
     <div *ngIf="step.timerIndex !== undefined">
-      <cd-timer [startTime]="step.definition.duration * 60" [autoStart]="false" [countdown]="true" format="intelli">
+      <cd-timer [startTime]="step.definition.duration * 60" [autoStart]="false" [countdown]="true" format="intelli" (onComplete)="playAlarmSound()">
       </cd-timer>
     </div>
     <div>

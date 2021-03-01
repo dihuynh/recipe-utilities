@@ -14,6 +14,7 @@ export interface Step {
 })
 export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
   public steps: Step[];
+  private alarm: HTMLAudioElement;
 
   @ViewChildren(CdTimerComponent)
   private timerComponentsChildren: QueryList<CdTimerComponent>;
@@ -34,6 +35,7 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
       }
       return step;
     });
+    this.alarm = new Audio('../../assets/alert.ogg');
   }
 
   ngAfterViewInit() {
@@ -41,9 +43,20 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
   }
 
   public next(currentIndex: number) {
+    this.resetAlarm();
     let nextStep = this.steps[currentIndex + 1];
     if (nextStep.timerIndex !== undefined) {
       this.timerComponents[nextStep.timerIndex].start();
     }
+  }
+
+  private resetAlarm() {
+    this.alarm.pause();
+    this.alarm.load();
+  }
+
+  public playAlarmSound(): void {
+    this.alarm.volume = 1;
+    this.alarm.play();
   }
 }
