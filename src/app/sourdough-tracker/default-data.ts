@@ -1,48 +1,55 @@
 export interface StepDefinition {
   title: string;
-  durationInMinutes: number;
+  duration?: number; // in minutes
+}
+
+export function makeWaitStep(minutes: number): StepDefinition {
+  return {
+    title: 'Rest',
+    duration: minutes
+  }
 }
 
 export const BASIC_STEPS: StepDefinition[] = [
   {
-    title: 'Autolyse',
-    durationInMinutes: 180
+    title: 'Autolyse'
   },
+  makeWaitStep(45),
   {
-    title: 'Levain mix',
-    durationInMinutes: 30
+    title: 'Levain mix'
   },
+  makeWaitStep(30),
   {
-    title: 'Salt mix',
-    durationInMinutes: 30
+    title: 'Salt mix'
   },
+  makeWaitStep(30),
   {
-    title: 'Lamination',
-    durationInMinutes: 30
+    title: 'Lamination'
   },
+  makeWaitStep(30),
   {
-    title: 'Stretch/Fold',
-    durationInMinutes: 30
+    title: 'Stretch/Fold'
   },
+  makeWaitStep(30),
   {
-    title: 'Stretch/Fold',
-    durationInMinutes: 30
+    title: 'Stretch/Fold'
   },
-  {
-    title: 'Stretch/Fold',
-    durationInMinutes: 30
-  },
+  makeWaitStep(30),
   {
     title: 'Stretch/Fold',
-    durationInMinutes: 30
   },
+  makeWaitStep(30),
+  {
+    title: 'Stretch/Fold',
+  },
+  makeWaitStep(30),
   {
     title: 'Bulk rest',
-    durationInMinutes: 60
   },
+  makeWaitStep(60),
   {
-    title: 'Preshape',
-    durationInMinutes: 30
-  }
+    title: 'Preshape'
+  },
+  makeWaitStep(30)
 ];
 
