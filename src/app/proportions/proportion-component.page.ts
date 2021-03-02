@@ -1,8 +1,5 @@
 import { ComponentFixture } from "@angular/core/testing";
 import { ProportionsComponent } from "./proportions.component";
-import { MatTableHarness } from '@angular/material/table/testing';
-import { HarnessLoader } from "@angular/cdk/testing";
-import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 import { By } from "@angular/platform-browser";
 
 export class ProportionsComponentPage {

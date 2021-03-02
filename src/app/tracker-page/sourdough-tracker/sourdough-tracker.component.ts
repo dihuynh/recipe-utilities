@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CdTimerComponent } from 'angular-cd-timer';
-import { BASIC_STEPS, StepDefinition } from './default-data';
+import { BASIC_STEPS, StepDefinition } from '../default-data';
 
 export interface Step {
   timerIndex?: number;
@@ -13,6 +13,9 @@ export interface Step {
   styleUrls: ['./sourdough-tracker.component.css']
 })
 export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
+  @Input()
+  public stepDefinitions: StepDefinition[];
+
   public steps: Step[];
   private alarm: HTMLAudioElement;
 
@@ -25,7 +28,7 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     let index = 0;
-    this.steps = BASIC_STEPS.map((stepDef: StepDefinition) => {
+    this.steps = this.stepDefinitions.map((stepDef: StepDefinition) => {
       let step: Step = {
         definition: stepDef
       };

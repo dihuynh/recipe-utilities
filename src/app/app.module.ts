@@ -16,9 +16,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SourdoughTrackerComponent } from './sourdough-tracker/sourdough-tracker.component';
+import { SourdoughTrackerComponent } from './tracker-page/sourdough-tracker/sourdough-tracker.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CdTimerModule } from 'angular-cd-timer';
+import { TrackerPageComponent } from './tracker-page/tracker-page.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CdTimerModule } from 'angular-cd-timer';
     AppComponent,
     ProportionsComponent,
     SourdoughTrackerComponent,
+    TrackerPageComponent,
   ],
   imports: [
     MatStepperModule,

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SourdoughTrackerComponent } from './sourdough-tracker.component';
+import { TrackerPageComponent } from './tracker-page.component';
 
-describe('SourdoughTrackerComponent', () => {
-  let component: SourdoughTrackerComponent;
-  let fixture: ComponentFixture<SourdoughTrackerComponent>;
+describe('TrackerPageComponent', () => {
+  let component: TrackerPageComponent;
+  let fixture: ComponentFixture<TrackerPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SourdoughTrackerComponent ]
+      declarations: [ TrackerPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SourdoughTrackerComponent);
+    fixture = TestBed.createComponent(TrackerPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
