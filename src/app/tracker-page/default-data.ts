@@ -12,14 +12,13 @@ export function makeWaitStep(minutes: number): StepDefinition {
 
 export const BASIC_STEPS: StepDefinition[] = [
   {
-    title: 'Autolyse',
-    duration: .1
+    title: 'Autolyse'
   },
-  makeWaitStep(.05),
+  makeWaitStep(60),
   {
     title: 'Levain mix'
   },
-  makeWaitStep(.05),
+  makeWaitStep(30),
   {
     title: 'Salt mix'
   },
