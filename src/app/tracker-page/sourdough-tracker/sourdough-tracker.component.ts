@@ -1,6 +1,7 @@
+import { AlarmService } from 'src/app/services/alarm.service';
 import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CdTimerComponent } from 'angular-cd-timer';
-import { BASIC_STEPS, StepDefinition } from '../default-data';
+import { StepDefinition } from '../default-data';
 
 export interface Step {
   timerIndex?: number;
@@ -17,14 +18,13 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
   public stepDefinitions: StepDefinition[];
 
   public steps: Step[];
-  private alarm: HTMLAudioElement;
 
   @ViewChildren(CdTimerComponent)
   private timerComponentsChildren: QueryList<CdTimerComponent>;
 
   private timerComponents: CdTimerComponent[];
 
-  constructor() { }
+  constructor(private alarmService: AlarmService) { }
 
   ngOnInit() {
     let index = 0;
@@ -32,34 +32,30 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
       let step: Step = {
         definition: stepDef
       };
-      if (stepDef.duration) {
+      if (stepDef.duration !== undefined) {
         step.timerIndex = index,
         index++;
       }
       return step;
     });
-    this.alarm = new Audio('../../assets/alert.ogg');
   }
 
   ngAfterViewInit() {
     this.timerComponents = this.timerComponentsChildren.toArray();
+    if (this.steps[0].timerIndex === 0) {
+      this.timerComponents[0].start();
+    }
   }
 
   public next(currentIndex: number) {
-    this.resetAlarm();
+    this.alarmService.reset();
     let nextStep = this.steps[currentIndex + 1];
     if (nextStep.timerIndex !== undefined) {
       this.timerComponents[nextStep.timerIndex].start();
     }
   }
 
-  private resetAlarm() {
-    this.alarm.pause();
-    this.alarm.load();
-  }
-
   public playAlarmSound(): void {
-    this.alarm.volume = 1;
-    this.alarm.play();
+    this.alarmService.play();
   }
 }
