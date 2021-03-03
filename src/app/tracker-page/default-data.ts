@@ -7,7 +7,7 @@ export function makeWaitStep(minutes: number): StepDefinition {
   return {
     title: 'Rest',
     duration: minutes
-  }
+  };
 }
 
 export const BASIC_STEPS: StepDefinition[] = [

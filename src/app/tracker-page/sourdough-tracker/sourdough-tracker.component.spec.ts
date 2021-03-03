@@ -17,7 +17,7 @@ describe('SourdoughTrackerComponent', () => {
   let fixture: ComponentFixture<SourdoughTrackerComponent>;
   let loader: HarnessLoader;
   let page: SourdoughTrackerComponentPage;
-  let alarmService: Spy<AlarmService> = createSpyFromClass(AlarmService);
+  const alarmService: Spy<AlarmService> = createSpyFromClass(AlarmService);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -32,7 +32,7 @@ describe('SourdoughTrackerComponent', () => {
       providers: [
         { provide: AlarmService, useValue: alarmService }
       ]
-    })
+    });
   });
 
   beforeEach(() => {
@@ -44,15 +44,15 @@ describe('SourdoughTrackerComponent', () => {
 
   it('should render the stepper based on provided steps', async () => {
     component.stepDefinitions = [{
-      title: "Test",
+      title: 'Test',
       duration: 1
     }];
     fixture.detectChanges();
 
-    let stepperHarness: MatStepperHarness = await loader.getHarness(MatStepperHarness);
-    let stepsInStepper: MatStepHarness[] = await stepperHarness.getSteps();
+    const stepperHarness: MatStepperHarness = await loader.getHarness(MatStepperHarness);
+    const stepsInStepper: MatStepHarness[] = await stepperHarness.getSteps();
     expect(stepsInStepper.length).toEqual(1);
-    await expectAsync(stepsInStepper[0].getLabel()).toBeResolvedTo("Test");
+    await expectAsync(stepsInStepper[0].getLabel()).toBeResolvedTo('Test');
 
     expect(page.cdTimerComponent().startTime).toEqual(60);
   });
@@ -60,18 +60,18 @@ describe('SourdoughTrackerComponent', () => {
   it('when the user clicks next into a step with a timer, the timer is automatically started', async () => {
     component.stepDefinitions = [
       {
-        title: "Step 1",
+        title: 'Step 1',
       },
       {
-        title: "Step 2",
+        title: 'Step 2',
         duration: 1
       }];
     fixture.detectChanges();
 
-    let timer: CdTimerComponent = page.cdTimerComponent();
+    const timer: CdTimerComponent = page.cdTimerComponent();
     spyOn(timer, 'start');
 
-    let nextButtonNativeEl = fixture.debugElement.queryAll(By.directive(MatStepperNext))[0].nativeElement;
+    const nextButtonNativeEl = fixture.debugElement.queryAll(By.directive(MatStepperNext))[0].nativeElement;
     nextButtonNativeEl.click();
     fixture.detectChanges();
 
@@ -84,13 +84,13 @@ describe('SourdoughTrackerComponent', () => {
   xit('when first step has a timer, start it automatically' , () => {
     component.stepDefinitions = [
       {
-        title: "Step 1",
+        title: 'Step 1',
         duration: 1
       }
     ];
     fixture.detectChanges();
 
-    let timer: CdTimerComponent = page.cdTimerComponent();
+    const timer: CdTimerComponent = page.cdTimerComponent();
     spyOn(timer, 'start');
     fixture.detectChanges();
 
@@ -100,12 +100,12 @@ describe('SourdoughTrackerComponent', () => {
   it('when the timer finishes, sound the alarm', () => {
     component.stepDefinitions = [
       {
-        title: "Step 1",
+        title: 'Step 1',
         duration: 1
       }];
     fixture.detectChanges();
 
-    let timer: CdTimerComponent = page.cdTimerComponent();
+    const timer: CdTimerComponent = page.cdTimerComponent();
     timer.onComplete.emit();
 
     expect(alarmService.play).toHaveBeenCalledTimes(1);

@@ -5,8 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProportionsComponent } from './proportions/proportions.component';
 
 const routes: Routes = [
-  { path: "proportions", component: ProportionsComponent },
-  { path: "tracker", component: TrackerPageComponent }
+  { path: 'proportions', component: ProportionsComponent },
+  { path: 'tracker', component: TrackerPageComponent }
 ];
 
 @NgModule({

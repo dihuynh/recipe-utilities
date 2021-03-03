@@ -20,7 +20,6 @@ import { SourdoughTrackerComponent } from './tracker-page/sourdough-tracker/sour
 import { MatStepperModule } from '@angular/material/stepper';
 import { CdTimerModule } from 'angular-cd-timer';
 import { TrackerPageComponent } from './tracker-page/tracker-page.component';
-import { AlarmService } from './services/alarm.service';
 
 
 @NgModule({
@@ -50,9 +49,6 @@ import { AlarmService } from './services/alarm.service';
     CdTimerModule
   ],
   exports: [ReactiveFormsModule],
-  providers: [
-    AlarmService
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

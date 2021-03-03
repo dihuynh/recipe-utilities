@@ -20,7 +20,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { toRecipeText } from './recipe-converter';
 import { MatSliderHarness } from '@angular/material/slider/testing';
-import { MatSelectionList, MatListModule } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 
 describe('ProportionsComponent', () => {
   let component: ProportionsComponent;
@@ -29,7 +29,7 @@ describe('ProportionsComponent', () => {
   let fixture: ComponentFixture<ProportionsComponent>;
   const flourWeight: number = SOURDOUGH_RECIPE[1].weight;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ProportionsComponent],
       imports: [
@@ -47,8 +47,8 @@ describe('ProportionsComponent', () => {
         MatButtonToggleModule,
         NoopAnimationsModule
       ]
-    }).compileComponents();
-  }));
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProportionsComponent);
@@ -58,13 +58,23 @@ describe('ProportionsComponent', () => {
     fixture.detectChanges();
   });
 
+  const assertTableShowsSourdoughRecipe = async (): Promise<void> => {
+    const rows: MatRowHarness[] = await loader.getAllHarnesses(MatRowHarness);
+    expect(rows.length).toEqual(SOURDOUGH_RECIPE.length);
+    SOURDOUGH_RECIPE.forEach((ing: Ingredient, i: number) => {
+      expect(page.ingredientWeightOnRow(i)).toEqual(ing.weight);
+      expect(page.ingredientNameOnRow(i)).toEqual(ing.name);
+      expect(page.ingredientPercentageOnRow(i)).toEqual(`${ing.percentage}%`);
+    });
+  };
+
   it('should show default sourdough recipe', async () => {
     await assertTableShowsSourdoughRecipe();
   });
 
   it('changing a non-flour ingredient weight should reflect in changing its percentage', () => {
     SOURDOUGH_RECIPE.forEach((ing: Ingredient, index: number) => {
-      if (ing.name.includes(FLOUR) == false) {
+      if (ing.name.includes(FLOUR) === false) {
         page.setWeightOnRow(index, ing.weight * 2);
         expect(page.ingredientPercentageOnRow(index)).toEqual(`${Number(ing.percentage) * 2}%`);
       }
@@ -75,7 +85,7 @@ describe('ProportionsComponent', () => {
     page.setWeightOnRow(1, flourWeight / 2);
 
     SOURDOUGH_RECIPE.forEach((ing: Ingredient, index: number) => {
-      if (ing.name.includes(FLOUR) == false){
+      if (ing.name.includes(FLOUR) === false) {
         // since flour was halved, each ing should be double the old percentage
         expect(page.ingredientPercentageOnRow(index)).toEqual(`${Number(ing.percentage) * 2}%`);
       }
@@ -86,7 +96,7 @@ describe('ProportionsComponent', () => {
     const addButton: MatButtonHarness = await loader.getHarness(MatButtonHarness.with({ text: 'Add' }));
     await addButton.click();
 
-    let rows: MatRowHarness[] = await loader.getAllHarnesses(MatRowHarness);
+    const rows: MatRowHarness[] = await loader.getAllHarnesses(MatRowHarness);
     expect(rows.length).toEqual(SOURDOUGH_RECIPE.length + 1);
 
     page.setWeightOnRow(SOURDOUGH_RECIPE.length, flourWeight);
@@ -110,7 +120,7 @@ describe('ProportionsComponent', () => {
   });
 
   it('should be able to scale', async () => {
-    let slider: MatSliderHarness = await loader.getHarness(MatSliderHarness);
+    const slider: MatSliderHarness = await loader.getHarness(MatSliderHarness);
 
     await slider.setValue(2);
     SOURDOUGH_RECIPE.forEach((ing: Ingredient, i: number) => {
@@ -124,14 +134,4 @@ describe('ProportionsComponent', () => {
       expect(page.ingredientPercentageOnRow(i)).toEqual(`${ing.percentage}%`);
     });
   });
-
-  const assertTableShowsSourdoughRecipe = async (): Promise<void> => {
-    let rows: MatRowHarness[] = await loader.getAllHarnesses(MatRowHarness);
-    expect(rows.length).toEqual(SOURDOUGH_RECIPE.length);
-    SOURDOUGH_RECIPE.forEach((ing: Ingredient, i: number) => {
-      expect(page.ingredientWeightOnRow(i)).toEqual(ing.weight);
-      expect(page.ingredientNameOnRow(i)).toEqual(ing.name);
-      expect(page.ingredientPercentageOnRow(i)).toEqual(`${ing.percentage}%`);
-    });
-  }
 });

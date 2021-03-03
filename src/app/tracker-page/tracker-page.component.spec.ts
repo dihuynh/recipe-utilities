@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TrackerPageComponent } from './tracker-page.component';
 
@@ -6,12 +6,11 @@ describe('TrackerPageComponent', () => {
   let component: TrackerPageComponent;
   let fixture: ComponentFixture<TrackerPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ TrackerPageComponent ]
-    })
-    .compileComponents();
-  }));
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TrackerPageComponent);

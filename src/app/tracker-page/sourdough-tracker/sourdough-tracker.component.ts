@@ -9,7 +9,7 @@ export interface Step {
 }
 
 @Component({
-  selector: 'sourdough-tracker',
+  selector: 'app-sourdough-tracker',
   templateUrl: './sourdough-tracker.component.html',
   styleUrls: ['./sourdough-tracker.component.css']
 })
@@ -17,22 +17,23 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
   @Input()
   public stepDefinitions: StepDefinition[];
 
-  public steps: Step[];
-
   @ViewChildren(CdTimerComponent)
   private timerComponentsChildren: QueryList<CdTimerComponent>;
+
+  public steps: Step[];
 
   private timerComponents: CdTimerComponent[];
 
   constructor(private alarmService: AlarmService) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     let index = 0;
     this.steps = this.stepDefinitions.map((stepDef: StepDefinition) => {
-      let step: Step = {
+      const step: Step = {
         definition: stepDef
       };
       if (stepDef.duration !== undefined) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         step.timerIndex = index,
         index++;
       }
@@ -40,7 +41,7 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.timerComponents = this.timerComponentsChildren.toArray();
     if (this.steps[0].timerIndex === 0) {
       this.timerComponents[0].start();
@@ -49,7 +50,7 @@ export class SourdoughTrackerComponent implements OnInit, AfterViewInit {
 
   public next(currentIndex: number) {
     this.alarmService.reset();
-    let nextStep = this.steps[currentIndex + 1];
+    const nextStep = this.steps[currentIndex + 1];
     if (nextStep.timerIndex !== undefined) {
       this.timerComponents[nextStep.timerIndex].start();
     }
