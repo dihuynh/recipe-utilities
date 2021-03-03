@@ -16,14 +16,21 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SourdoughTrackerComponent } from './tracker-page/sourdough-tracker/sourdough-tracker.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { CdTimerModule } from 'angular-cd-timer';
+import { TrackerPageComponent } from './tracker-page/tracker-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProportionsComponent
+    ProportionsComponent,
+    SourdoughTrackerComponent,
+    TrackerPageComponent,
   ],
   imports: [
+    MatStepperModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -38,10 +45,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatButtonToggleModule,
     MatListModule,
     FlexLayoutModule,
-    MatSortModule
+    MatSortModule,
+    CdTimerModule
   ],
   exports: [ReactiveFormsModule],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

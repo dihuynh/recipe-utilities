@@ -1,14 +1,11 @@
-import { ComponentFixture } from "@angular/core/testing";
-import { ProportionsComponent } from "./proportions.component";
-import { MatTableHarness } from '@angular/material/table/testing';
-import { HarnessLoader } from "@angular/cdk/testing";
-import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
-import { By } from "@angular/platform-browser";
+import { ComponentFixture } from '@angular/core/testing';
+import { ProportionsComponent } from './proportions.component';
+import { By } from '@angular/platform-browser';
 
 export class ProportionsComponentPage {
 
   public setWeightOnRow(index: number, newWeight: number): void {
-    let element: HTMLInputElement = this.getWeightInputOnRow(index);
+    const element: HTMLInputElement = this.getWeightInputOnRow(index);
     element.value = newWeight.toString();
     element.dispatchEvent(new Event('input'));
     element.dispatchEvent(new Event('blur'));

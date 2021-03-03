@@ -1,5 +1,5 @@
-import { toIngredientsFromRecipeTex } from "./recipe-converter";
-import { Ingredient, FLOUR } from "./proportions-datasource";
+import { toIngredientsFromRecipeTex } from './recipe-converter';
+import { Ingredient, FLOUR } from './proportions-datasource';
 
 describe('Recipe converter', () => {
 
@@ -17,7 +17,7 @@ describe('Recipe converter', () => {
   });
 
   it('should convert multi word ingredient', () => {
-    const recipeText: string = '60g candied orange peel';
+    const recipeText = '60g candied orange peel';
 
     const ingredients: Ingredient[] = toIngredientsFromRecipeTex(recipeText);
 
@@ -26,7 +26,7 @@ describe('Recipe converter', () => {
   });
 
   it('should convert multiple lines into multiple ingredients', () => {
-    const recipeText: string = '50 g flour \n 100g butter';
+    const recipeText = '50 g flour \n 100g butter';
 
     const ingredients: Ingredient[] = toIngredientsFromRecipeTex(recipeText);
 

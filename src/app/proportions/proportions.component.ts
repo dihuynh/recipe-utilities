@@ -83,7 +83,7 @@ export class ProportionsComponent implements OnInit {
 
   private addIngredientFromRecipe(recipe: Ingredient[]): void {
     recipe.forEach((ing: Ingredient) => {
-      let formGroup: FormGroup = this.fb.group({
+      const formGroup: FormGroup = this.fb.group({
         name: [ing.name],
         weight: [ing.weight]
       });
