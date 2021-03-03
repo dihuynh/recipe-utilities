@@ -4,16 +4,15 @@ import { By } from '@angular/platform-browser';
 
 export class ProportionsComponentPage {
 
+  constructor(private fixture: ComponentFixture<ProportionsComponent>) {
+   }
+
   public setWeightOnRow(index: number, newWeight: number): void {
     const element: HTMLInputElement = this.getWeightInputOnRow(index);
     element.value = newWeight.toString();
     element.dispatchEvent(new Event('input'));
     element.dispatchEvent(new Event('blur'));
     this.fixture.detectChanges();
-  }
-
-  private getNameInputOnRow(index: number): HTMLInputElement {
-    return this.fixture.debugElement.query(By.css(`input#name-input-${index}`)).nativeElement;
   }
 
   public ingredientPercentageOnRow(index: number): string {
@@ -32,7 +31,7 @@ export class ProportionsComponentPage {
     return Number(this.getWeightInputOnRow(i).value);
   }
 
-  constructor(private fixture: ComponentFixture<ProportionsComponent>) {
-   }
-
+  private getNameInputOnRow(index: number): HTMLInputElement {
+    return this.fixture.debugElement.query(By.css(`input#name-input-${index}`)).nativeElement;
+  }
 }

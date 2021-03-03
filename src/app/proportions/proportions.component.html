@@ -58,7 +58,7 @@
     </div>
     <div class="mat-app-background" fxFlex="25">
       <mat-selection-list #p formControlName="preset" [multiple]="false">
-        <mat-list-option *ngFor="let p of PRESETS" [value]="p">
+        <mat-list-option *ngFor="let p of presets" [value]="p">
           {{ p.name }}
         </mat-list-option>
       </mat-selection-list>
