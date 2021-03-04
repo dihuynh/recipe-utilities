@@ -43,13 +43,13 @@ describe('Recipe converter', () => {
   it('should convert a single egg into grams', () => {
     const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText('1 egg');
     expect(ingredients[0].name).toEqual('egg');
-    expect(ingredients[0].weight).toEqual(57);
+    expect(ingredients[0].weight).toEqual(48);
   });
 
   it('should convert multiple eggs into grams', () => {
     const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText('2 eggs');
     expect(ingredients[0].name).toEqual('eggs');
-    expect(ingredients[0].weight).toEqual(114);
+    expect(ingredients[0].weight).toEqual(96);
   });
 
   it('should convert a single egg yolk into grams', () => {
@@ -69,14 +69,14 @@ describe('Recipe converter', () => {
   it('should convert a single egg white into grams', () => {
     const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText('1 egg white');
     expect(ingredients[0].name).toEqual('egg white');
-    expect(ingredients[0].weight).toEqual(40);
+    expect(ingredients[0].weight).toEqual(30);
   });
 
   ['2 egg whites', '2 eggs white'].forEach((line: string) => {
     it('should convert egg yolks into grams', () => {
       const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText(line);
       expect(ingredients[0].name).toEqual(line.substr(2));
-      expect(ingredients[0].weight).toEqual(80);
+      expect(ingredients[0].weight).toEqual(60);
     });
   });
 });
