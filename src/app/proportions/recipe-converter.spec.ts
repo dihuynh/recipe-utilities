@@ -1,7 +1,8 @@
-import { toIngredientsFromRecipeTex as toIngredientsFromRecipeText } from './recipe-converter';
+import { RecipeConverter } from './recipe-converter';
 import { Ingredient, FLOUR } from './proportions-datasource';
 
 describe('Recipe converter', () => {
+  const converter: RecipeConverter = new RecipeConverter();
 
   [
     '50 g flour',
@@ -9,7 +10,7 @@ describe('Recipe converter', () => {
     '50  g  flour'
   ].forEach((recipeText: string) => {
     it('should convert text to ingredients', () => {
-      const ingredients: Ingredient[] = toIngredientsFromRecipeText(recipeText);
+      const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText(recipeText);
 
       expect(ingredients[0].name).toEqual(FLOUR);
       expect(ingredients[0].weight).toEqual(50);
@@ -19,7 +20,7 @@ describe('Recipe converter', () => {
   it('should convert multi word ingredient', () => {
     const recipeText = '60g candied orange peel';
 
-    const ingredients: Ingredient[] = toIngredientsFromRecipeText(recipeText);
+    const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText(recipeText);
 
     expect(ingredients[0].name).toEqual('candied orange peel');
     expect(ingredients[0].weight).toEqual(60);
@@ -28,7 +29,7 @@ describe('Recipe converter', () => {
   it('should convert multiple lines into multiple ingredients', () => {
     const recipeText = '50 g flour \n 100g butter';
 
-    const ingredients: Ingredient[] = toIngredientsFromRecipeText(recipeText);
+    const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText(recipeText);
 
     const flour: Ingredient = ingredients[0];
     expect(flour.name).toEqual(FLOUR);
@@ -40,41 +41,41 @@ describe('Recipe converter', () => {
   });
 
   it('should convert a single egg into grams', () => {
-    const ingredients: Ingredient[] = toIngredientsFromRecipeText('1 egg');
+    const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText('1 egg');
     expect(ingredients[0].name).toEqual('egg');
     expect(ingredients[0].weight).toEqual(57);
   });
 
   it('should convert multiple eggs into grams', () => {
-    const ingredients: Ingredient[] = toIngredientsFromRecipeText('2 eggs');
+    const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText('2 eggs');
     expect(ingredients[0].name).toEqual('eggs');
     expect(ingredients[0].weight).toEqual(114);
   });
 
   it('should convert a single egg yolk into grams', () => {
-    const ingredients: Ingredient[] = toIngredientsFromRecipeText('1 egg yolk');
+    const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText('1 egg yolk');
     expect(ingredients[0].name).toEqual('egg yolk');
     expect(ingredients[0].weight).toEqual(18);
   });
 
   ['2 egg yolks', '2 eggs yolks', '2 yolks'].forEach((line: string) => {
     it('should convert egg yolks into grams', () => {
-      const ingredients: Ingredient[] = toIngredientsFromRecipeText(line);
-      expect(ingredients[0].name).toEqual('egg yolks');
+      const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText(line);
+      expect(ingredients[0].name).toEqual(line.substr(2));
       expect(ingredients[0].weight).toEqual(36);
     });
   });
 
   it('should convert a single egg white into grams', () => {
-    const ingredients: Ingredient[] = toIngredientsFromRecipeText('1 egg white');
+    const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText('1 egg white');
     expect(ingredients[0].name).toEqual('egg white');
     expect(ingredients[0].weight).toEqual(40);
   });
 
   ['2 egg whites', '2 eggs white'].forEach((line: string) => {
     it('should convert egg yolks into grams', () => {
-      const ingredients: Ingredient[] = toIngredientsFromRecipeText(line);
-      expect(ingredients[0].name).toEqual('egg whites');
+      const ingredients: Ingredient[] = converter.toIngredientsFromRecipeText(line);
+      expect(ingredients[0].name).toEqual(line.substr(2));
       expect(ingredients[0].weight).toEqual(80);
     });
   });

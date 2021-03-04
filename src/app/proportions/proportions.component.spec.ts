@@ -27,6 +27,7 @@ describe('ProportionsComponent', () => {
   let page: ProportionsComponentPage;
   let loader: HarnessLoader;
   let fixture: ComponentFixture<ProportionsComponent>;
+
   const flourWeight: number = SOURDOUGH_RECIPE[1].weight;
 
   beforeEach(() => {
