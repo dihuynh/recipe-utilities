@@ -34,10 +34,10 @@ export class RecipeConverter {
   private eggYolkConverter: IngredientConverter = new IngredientConverter(this.eggYolkPattern, 18);
 
   private eggPattern = new RegExp(/(\d+)\s+(egg[s]*)/);
-  private wholeEggConverter: IngredientConverter = new IngredientConverter(this.eggPattern, 57);
+  private wholeEggConverter: IngredientConverter = new IngredientConverter(this.eggPattern, 48);
 
   private eggWhitePattern = new RegExp(/(\d+)\s*([egg|eggs]* white[s]*)/);
-  private eggWhiteConverter: IngredientConverter = new IngredientConverter(this.eggWhitePattern, 40);
+  private eggWhiteConverter: IngredientConverter = new IngredientConverter(this.eggWhitePattern, 30);
 
   private gramPattern = new RegExp(/(\d+)\s*g\s+([\w\s]+)/);
   private basicConverter: IngredientConverter = new IngredientConverter(this.gramPattern, 1);
