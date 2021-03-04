@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { toRecipeText, toIngredientsFromFormValues, toIngredientsFromRecipeTex } from './recipe-converter';
+import { toRecipeText, RecipeConverter } from './recipe-converter';
 
 export interface IngredientFormValue {
   name: string;
@@ -27,10 +27,11 @@ export class ProportionsComponent implements OnInit {
   public presetFormControl: FormControl = new FormControl();
   public formGroup: FormGroup;
   public recipeText: FormControl = new FormControl();
-  public PRESETS: Preset[] = PRESETS;
+  public presets: Preset[] = PRESETS;
 
   private ingredientsAtBaseScale: Map<string, number> = new Map();
   private flourFormGroup: FormGroup = new FormGroup({});
+  private converter: RecipeConverter = new RecipeConverter();
 
   constructor(private fb: FormBuilder) {
   }
@@ -47,9 +48,25 @@ export class ProportionsComponent implements OnInit {
     this.presetFormControl.setValue([PRESETS[0]]);
   }
 
+  public add(): void {
+    this.ingredientsFormArray.push(this.fb.group({
+      name: [''],
+      weight: [0]
+    }));
+    this.updateDataSource(this.ingredientsFormArray.value);
+  }
+
+  public export(): void {
+    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.value));
+  }
+
+  public import(): void {
+    this.setIngredients(this.converter.toIngredientsFromRecipeText(this.recipeText.value));
+  }
+
   private updateWhenWeightChanges() {
     this.ingredientsFormArray.valueChanges.subscribe((formArrayValue: IngredientFormValue[]) => {
-      this.updateDataSource(toIngredientsFromFormValues(formArrayValue));
+      this.updateDataSource(this.converter.toIngredientsFromFormValues(formArrayValue));
     });
   }
 
@@ -96,22 +113,6 @@ export class ProportionsComponent implements OnInit {
     if (ing.name.includes(FLOUR)) {
       this.flourFormGroup = formGroup;
     }
-  }
-
-  public add(): void {
-    this.ingredientsFormArray.push(this.fb.group({
-      name: [''],
-      weight: [0]
-    }));
-    this.updateDataSource(this.ingredientsFormArray.value);
-  }
-
-  public export(): void {
-    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.value));
-  }
-
-  public import(): void {
-    this.setIngredients(toIngredientsFromRecipeTex(this.recipeText.value));
   }
 
   private getPercentage(ingWeight: number): string {

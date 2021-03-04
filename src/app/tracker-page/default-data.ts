@@ -3,12 +3,12 @@ export interface StepDefinition {
   duration?: number; // in minutes
 }
 
-export function makeWaitStep(minutes: number): StepDefinition {
-  return {
+export const makeWaitStep = (minutes: number): StepDefinition =>
+  ({
     title: 'Rest',
     duration: minutes
-  };
-}
+  });
+;
 
 export const BASIC_STEPS: StepDefinition[] = [
   {
