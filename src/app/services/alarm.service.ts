@@ -2,7 +2,7 @@ export class AlarmService {
   private alarm: HTMLAudioElement;
 
   constructor() {
-    this.alarm = new Audio('../../assets/alert.ogg');
+    this.alarm = new Audio('./assets/alert.ogg');
   }
 
   public play(): void {
