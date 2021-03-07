@@ -28,6 +28,11 @@ export class IngredientConverter {
   }
 }
 
+export interface ConverterResult {
+  ingredients?: Ingredient[];
+  errors?: string[];
+}
+
 @Injectable()
 export class RecipeConverter {
   private eggYolkPattern = new RegExp(/(\d+)\s*([egg|eggs]*[\s]*yolk[s]*)/);
@@ -42,18 +47,24 @@ export class RecipeConverter {
   private gramPattern = new RegExp(/(\d+)\s*g\s+([\w\s]+)/);
   private basicConverter: IngredientConverter = new IngredientConverter(this.gramPattern, 1);
 
-  public toIngredientsFromRecipeText(recipeText: string): Ingredient[] {
+  public convert(recipeText: string): ConverterResult {
     const lines: string[] = recipeText.split('\n');
-    return lines.map((line: string) => this.convertLine(line.trim()));
-  };
+    const errors: string[] = [];
+    const ingredients: Ingredient[] = [];
 
-  public toIngredientsFromFormValues(ingredients: IngredientFormValue[]): Ingredient[] {
-    return ingredients.map((ing: IngredientFormValue) => ({
-        name: ing.name,
-        weight: ing.weight,
-        percentage: '0'
-      } as Ingredient));
-  }
+    lines.forEach((line: string) => {
+      const convertedLine: Ingredient = this.convertLine(line.trim());
+      if (convertedLine) {
+        ingredients.push(convertedLine);
+      } else {
+        errors.push(line);
+      }
+    });
+    return {
+      ingredients,
+      errors
+    };
+  };
 
   private convertLine(line: string): Ingredient {
     let results: Ingredient = this.eggYolkConverter.match(line);

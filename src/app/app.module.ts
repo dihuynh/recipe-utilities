@@ -20,6 +20,9 @@ import { SourdoughTrackerComponent } from './tracker-page/sourdough-tracker/sour
 import { MatStepperModule } from '@angular/material/stepper';
 import { CdTimerModule } from 'angular-cd-timer';
 import { TrackerPageComponent } from './tracker-page/tracker-page.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ImportRecipeDialogComponent } from './proportions/import-recipe-dialog/import-recipe-dialog.component';
 
 
 @NgModule({
@@ -28,10 +31,13 @@ import { TrackerPageComponent } from './tracker-page/tracker-page.component';
     ProportionsComponent,
     SourdoughTrackerComponent,
     TrackerPageComponent,
+    ImportRecipeDialogComponent
   ],
   imports: [
     MatStepperModule,
+    MatIconModule,
     BrowserModule,
+    MatDialogModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
