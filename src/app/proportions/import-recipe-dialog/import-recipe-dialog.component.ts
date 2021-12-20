@@ -15,15 +15,22 @@ export class ImportRecipeDialogComponent implements OnInit {
   public result: string;
   public error: boolean;
   private converter: RecipeConverter = new RecipeConverter();
+  private rawRecipeInput: string;
 
   constructor(public dialogRef: MatDialogRef<ImportRecipeDialogComponent>) { }
 
   ngOnInit(): void {
   }
 
+  public clearStatus(): void {
+    this.error = false;
+    this.recipeText.setValue(this.rawRecipeInput);
+  }
+
   public import(): void {
     this.error = false;
     const recipeToImport = this.recipeText.value;
+    this.rawRecipeInput = recipeToImport;
     const recipeLines: string[] = recipeToImport.split('\n');
     const lineResult: string[] = [];
     const ingredients: Ingredient[] = [];
