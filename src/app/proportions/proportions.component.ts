@@ -63,11 +63,13 @@ export class ProportionsComponent implements OnInit {
   }
 
   public import(): void {
-    this.dialog.open(ImportRecipeDialogComponent, {
+    const dialogRef = this.dialog.open(ImportRecipeDialogComponent, {
         height: '400px',
         width: '600px'
     });
-    // this.setIngredients(this.converter.toIngredientsFromRecipeText(this.recipeText.value));
+    dialogRef.afterClosed().subscribe((ingredients: Ingredient[]) => {
+      this.setIngredients(ingredients);
+    });
   }
 
   private updateWhenWeightChanges() {

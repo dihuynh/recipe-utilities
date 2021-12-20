@@ -10,12 +10,25 @@ describe('Recipe converter', () => {
   [
     '50 g flour',
     '50g flour',
+    '50 grams flour',
     '50  g  flour'
   ].forEach((recipeText: string) => {
     it('should convert text to ingredients', () => {
       const ingredients: Ingredient[] = getIngredients(recipeText);
 
       expect(ingredients[0].name).toEqual(FLOUR);
+      expect(ingredients[0].weight).toEqual(50);
+    });
+  });
+
+  [
+    '50 grams all-purpose flour',
+    '50 g all-purpose flour'
+  ].forEach((recipeText: string) => {
+    it('should convert text to ingredients', () => {
+      const ingredients: Ingredient[] = getIngredients(recipeText);
+
+      expect(ingredients[0].name).toEqual('all-purpose flour');
       expect(ingredients[0].weight).toEqual(50);
     });
   });

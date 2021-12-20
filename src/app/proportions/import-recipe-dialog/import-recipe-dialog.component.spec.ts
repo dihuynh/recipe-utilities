@@ -1,3 +1,4 @@
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ImportRecipeDialogComponent } from './import-recipe-dialog.component';
@@ -8,7 +9,11 @@ describe('ImportRecipeDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImportRecipeDialogComponent ]
+      imports: [MatDialogModule],
+      declarations: [ ImportRecipeDialogComponent ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }
+      ]
     })
     .compileComponents();
   });

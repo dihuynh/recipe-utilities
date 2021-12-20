@@ -44,7 +44,7 @@ export class RecipeConverter {
   private eggWhitePattern = new RegExp(/(\d+)\s*([egg|eggs]* white[s]*)/);
   private eggWhiteConverter: IngredientConverter = new IngredientConverter(this.eggWhitePattern, 30);
 
-  private gramPattern = new RegExp(/(\d+)\s*g\s+([\w\s]+)/);
+  private gramPattern = new RegExp(/(\d+)\s*(?:g|gram|grams)\s+([\w\s-]+)/);
   private basicConverter: IngredientConverter = new IngredientConverter(this.gramPattern, 1);
 
   public convert(recipeText: string): ConverterResult {
@@ -66,7 +66,7 @@ export class RecipeConverter {
     };
   };
 
-  private convertLine(line: string): Ingredient {
+  public convertLine(line: string): Ingredient {
     let results: Ingredient = this.eggYolkConverter.match(line);
     if (results !== undefined) {
       return results;
