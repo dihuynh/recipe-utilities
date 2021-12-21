@@ -59,7 +59,11 @@ export class ProportionsComponent implements OnInit {
   }
 
   public export(): void {
-    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.value));
+    const ingredients: Ingredient[] = this.ingredientsFormArray.value;
+    ingredients.forEach((ing: Ingredient) => {
+      ing.percentage = this.getPercentage(ing.weight);
+    });
+    this.recipeText.setValue(toRecipeText(ingredients));
   }
 
   public import(): void {

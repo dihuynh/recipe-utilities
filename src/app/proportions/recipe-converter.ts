@@ -87,8 +87,8 @@ export class RecipeConverter {
 }
 
 export const toRecipeText =
-(ingredients: { name: string; weight: number }[]): string =>
+(ingredients: Ingredient[]): string =>
   ingredients
-    .map((ing: IngredientFormValue) => ing.weight + ' g ' + ing.name)
+    .map((ing: Ingredient) => `${ing.percentage}%, ${ing.weight}g ${ing.name}`)
     .join('\n');
 
