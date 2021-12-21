@@ -1,26 +1,62 @@
 <h1 class="mat-h1">Proportions</h1>
-<div [formGroup]="formGroup" fxLayout="row" fxLayout.xs="column" fxFlexFill [style.margin-left]="'10px'" fxLayoutGap="12px">
-    <div fxFlex="75" fxFlex.xs="55">
-      <mat-table class="full-width-table mat-elevation-z2" style="margin-bottom: 10px" aria-label="Elements"
-        formArrayName="array" [dataSource]="dataSource">
+
+<div style="margin-left: 20px;">
+  <button mat-raised-button
+          color="primary"
+          (click)="import()"
+          style="margin-bottom: 10px; margin-right: 10px;">
+    + Import recipe
+  </button>
+  <div>
+    <mat-label>Use slider to scale recipe up or down</mat-label>
+    <mat-slider style="width: 300px"
+                max="2"
+                min=".25"
+                step=".25"
+                thumbLabel
+                title="Scale"
+                tickInterval="1"
+                [formControl]="scaleFormControl">
+    </mat-slider>
+  </div>
+
+  <div [formGroup]="formGroup"
+       fxLayout="row"
+       fxLayout.xs="column"
+       fxFlexFill
+       fxLayoutGap="12px">
+    <div fxFlex="50"
+         fxFlex.xs="55">
+      <mat-table class="full-width-table mat-elevation-z2"
+                 style="margin-bottom: 10px"
+                 aria-label="Elements"
+                 formArrayName="array"
+                 [dataSource]="dataSource">
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-          <mat-cell *matCellDef="let row, let index = index" [formGroupName]="index">
+          <mat-cell *matCellDef="let row, let index = index"
+                    [formGroupName]="index">
             <mat-form-field>
-              <input id="name-input-{{index}}" matInput formControlName="name">
+              <input id="name-input-{{index}}"
+                     matInput
+                     formControlName="name">
             </mat-form-field>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="weight">
-          <mat-header-cell *matHeaderCellDef>Weight</mat-header-cell>
-          <mat-cell *matCellDef="let row, let index = index" [formGroupName]="index">
+          <mat-header-cell *matHeaderCellDef>Weight in grams</mat-header-cell>
+          <mat-cell *matCellDef="let row, let index = index"
+                    [formGroupName]="index">
             <mat-form-field>
-              <input id="weight-input-{{index}}" matInput type="number" formControlName="weight">
+              <input id="weight-input-{{index}}"
+                     matInput
+                     type="number"
+                     formControlName="weight">
             </mat-form-field>
           </mat-cell>
         </ng-container>
@@ -34,33 +70,40 @@
       </mat-table>
 
       <div>
-        <button mat-flat-button color="primary" style="margin-right: 10px;" aria-label="click to add another ingredient"
-          (click)="add()">
-          Add
+        <button mat-raised-button
+                color="basic"
+                style="margin-right: 10px;"
+                aria-label="click to add another ingredient"
+                (click)="add()">
+          Add ingredient
         </button>
-        <button mat-stroked-button color="basic" (click)="import()" style="margin-bottom: 10px; margin-right: 10px;">
-          Import
-        </button>
-        <button mat-stroked-button color="basic" (click)="export()" style="margin-bottom: 10px; margin-right: 10px;">
-          Export
-        </button>
-        <mat-slider style="width: 300px" max="2" min=".25" step=".25" thumbLabel title="Scale" tickInterval="1"
-          [formControl]="scaleFormControl">
-        </mat-slider>
-      </div>
 
+        <button mat-raised-button
+                color="basic"
+                (click)="export()"
+                style="margin-bottom: 10px; margin-right: 10px;">
+          Export recipe
+        </button>
+      </div>
       <div>
-        <mat-form-field>
+        <mat-form-field *ngIf="recipeText.value">
           <mat-label>Recipe text</mat-label>
-          <textarea matInput cdkTextareaAutosize [formControl]="recipeText"></textarea>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    [formControl]="recipeText"></textarea>
         </mat-form-field>
       </div>
     </div>
-    <div class="mat-app-background" fxFlex="25">
-      <mat-selection-list #p formControlName="preset" [multiple]="false">
-        <mat-list-option *ngFor="let p of presets" [value]="p">
+    <!-- <div class="mat-app-background"
+         fxFlex="25">
+      <mat-selection-list #p
+                          formControlName="preset"
+                          [multiple]="false">
+        <mat-list-option *ngFor="let p of presets"
+                         [value]="p">
           {{ p.name }}
         </mat-list-option>
       </mat-selection-list>
-    </div>
+    </div> -->
+  </div>
 </div>

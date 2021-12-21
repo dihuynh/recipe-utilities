@@ -1,0 +1,29 @@
+<div>
+  <mat-form-field fxFlex="100">
+    <mat-label>Enter your recipe</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="10"
+              cdkAutosizeMaxRows="50"
+              [formControl]="recipeText"></textarea>
+  </mat-form-field>
+</div>
+<div>
+  <button mat-raised-button
+          color="primary"
+          *ngIf="!error"
+          (click)="import()"
+          style="margin-right: 10px;">
+    Import
+  </button>
+  <button mat-raised-button
+          color="primary"
+          *ngIf="error"
+          (click)="clearStatus()">
+    Reset
+  </button>
+  <mat-error *ngIf="error">
+    There are ingredients that we can't convert into grams.
+    Please convert it manually, click Reset and then re-import your updated recipe.
+  </mat-error>
+</div>

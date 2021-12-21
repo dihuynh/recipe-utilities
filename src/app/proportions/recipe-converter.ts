@@ -28,6 +28,11 @@ export class IngredientConverter {
   }
 }
 
+export interface ConverterResult {
+  ingredients?: Ingredient[];
+  errors?: string[];
+}
+
 @Injectable()
 export class RecipeConverter {
   private eggYolkPattern = new RegExp(/(\d+)\s*([egg|eggs]*[\s]*yolk[s]*)/);
@@ -39,23 +44,29 @@ export class RecipeConverter {
   private eggWhitePattern = new RegExp(/(\d+)\s*([egg|eggs]* white[s]*)/);
   private eggWhiteConverter: IngredientConverter = new IngredientConverter(this.eggWhitePattern, 30);
 
-  private gramPattern = new RegExp(/(\d+)\s*g\s+([\w\s]+)/);
+  private gramPattern = new RegExp(/(\d+)\s*(?:g|gram|grams)\s+([\w\s-]+)/);
   private basicConverter: IngredientConverter = new IngredientConverter(this.gramPattern, 1);
 
-  public toIngredientsFromRecipeText(recipeText: string): Ingredient[] {
+  public convert(recipeText: string): ConverterResult {
     const lines: string[] = recipeText.split('\n');
-    return lines.map((line: string) => this.convertLine(line.trim()));
+    const errors: string[] = [];
+    const ingredients: Ingredient[] = [];
+
+    lines.forEach((line: string) => {
+      const convertedLine: Ingredient = this.convertLine(line.trim());
+      if (convertedLine) {
+        ingredients.push(convertedLine);
+      } else {
+        errors.push(line);
+      }
+    });
+    return {
+      ingredients,
+      errors
+    };
   };
 
-  public toIngredientsFromFormValues(ingredients: IngredientFormValue[]): Ingredient[] {
-    return ingredients.map((ing: IngredientFormValue) => ({
-        name: ing.name,
-        weight: ing.weight,
-        percentage: '0'
-      } as Ingredient));
-  }
-
-  private convertLine(line: string): Ingredient {
+  public convertLine(line: string): Ingredient {
     let results: Ingredient = this.eggYolkConverter.match(line);
     if (results !== undefined) {
       return results;
@@ -76,8 +87,8 @@ export class RecipeConverter {
 }
 
 export const toRecipeText =
-(ingredients: { name: string; weight: number }[]): string =>
+(ingredients: Ingredient[]): string =>
   ingredients
-    .map((ing: IngredientFormValue) => ing.weight + ' g ' + ing.name)
+    .map((ing: Ingredient) => `${ing.percentage}%, ${ing.weight}g ${ing.name}`)
     .join('\n');
 

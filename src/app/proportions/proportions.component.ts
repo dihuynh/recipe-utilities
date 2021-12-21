@@ -3,6 +3,8 @@ import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { toRecipeText, RecipeConverter } from './recipe-converter';
+import { MatDialog } from '@angular/material/dialog';
+import { ImportRecipeDialogComponent } from './import-recipe-dialog/import-recipe-dialog.component';
 
 export interface IngredientFormValue {
   name: string;
@@ -33,7 +35,7 @@ export class ProportionsComponent implements OnInit {
   private flourFormGroup: FormGroup = new FormGroup({});
   private converter: RecipeConverter = new RecipeConverter();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -57,17 +59,35 @@ export class ProportionsComponent implements OnInit {
   }
 
   public export(): void {
-    this.recipeText.setValue(toRecipeText(this.ingredientsFormArray.value));
+    const ingredients: Ingredient[] = this.ingredientsFormArray.value;
+    ingredients.forEach((ing: Ingredient) => {
+      ing.percentage = this.getPercentage(ing.weight);
+    });
+    this.recipeText.setValue(toRecipeText(ingredients));
   }
 
   public import(): void {
-    this.setIngredients(this.converter.toIngredientsFromRecipeText(this.recipeText.value));
+    const dialogRef = this.dialog.open(ImportRecipeDialogComponent, {
+        height: '400px',
+        width: '600px'
+    });
+    dialogRef.afterClosed().subscribe((ingredients: Ingredient[]) => {
+      this.setIngredients(ingredients);
+    });
   }
 
   private updateWhenWeightChanges() {
     this.ingredientsFormArray.valueChanges.subscribe((formArrayValue: IngredientFormValue[]) => {
-      this.updateDataSource(this.converter.toIngredientsFromFormValues(formArrayValue));
+      this.updateDataSource(this.toIngredientsFromFormValues(formArrayValue));
     });
+  }
+
+  private toIngredientsFromFormValues(ingredients: IngredientFormValue[]): Ingredient[] {
+    return ingredients.map((ing: IngredientFormValue) => ({
+        name: ing.name,
+        weight: ing.weight,
+        percentage: '0'
+      } as Ingredient));
   }
 
   private updateWhenScaleChanges() {
