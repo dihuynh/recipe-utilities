@@ -1,7 +1,7 @@
 import { RecipeConverter } from './recipe-converter';
 import { Ingredient, FLOUR } from '../proportions-datasource';
 
-fdescribe('Recipe converter', () => {
+describe('Recipe converter', () => {
   const converter: RecipeConverter = new RecipeConverter();
 
   const getIngredients = (text: string): Ingredient =>
