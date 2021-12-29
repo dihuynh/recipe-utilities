@@ -1,21 +1,13 @@
-import { eggYolkConverter, eggWhiteConverter, wholeEggConverter, basicConverter } from './converter-list';
+import { CONVERTERS } from './converter-list';
 import { Injectable } from '@angular/core';
-import { IngredientConverter } from './ingredient-converter';
 import { Ingredient } from '../proportions-datasource';
 
 @Injectable()
 export class RecipeConverter {
 
-  private converters: IngredientConverter[] = [
-    eggYolkConverter,
-    eggWhiteConverter,
-    wholeEggConverter,
-    basicConverter
-  ];
-
   public convertLine(line: string): Ingredient {
     let results: Ingredient;
-    for (const converter of this.converters) {
+    for (const converter of CONVERTERS) {
       results = converter.match(line);
       if (results !== undefined) {
         break;

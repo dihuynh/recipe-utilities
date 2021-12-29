@@ -45,10 +45,13 @@ fdescribe('Recipe converter', () => {
 
   [
     {text: '3 c all purpose flour', expectedWeight: 360},
-    {text: '3.5 c all purpose flour', expectedWeight: 420}
+    {text: '3.5 cup all purpose flour', expectedWeight: 420},
+    {text: '3.5 cups allpurpose flour', expectedWeight: 420},
+    {text: '3.5 c all-purpose flour', expectedWeight: 420}
   ].forEach((value: {text: string; expectedWeight: number}) => {
     it('should convert flour in cups', () => {
       const ingredient: Ingredient = getIngredients(value.text);
+      expect(ingredient.name).toMatch(new RegExp(/all[-\s]*purpose\s+flour/));
       expect(ingredient.weight).toEqual(value.expectedWeight);
     });
   });
