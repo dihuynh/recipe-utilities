@@ -18,7 +18,7 @@ import { MatRowHarness } from '@angular/material/table/testing';
 import { SOURDOUGH_RECIPE, Ingredient, FLOUR } from './proportions-datasource';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { toRecipeText } from './recipe-converter';
+import { toRecipeText } from './converters/recipe-converter';
 import { MatSliderHarness } from '@angular/material/slider/testing';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';

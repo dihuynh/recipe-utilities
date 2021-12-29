@@ -1,8 +1,8 @@
 import { Ingredient } from './../proportions-datasource';
-import { RecipeConverter, ConverterResult } from './../recipe-converter';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RecipeConverter } from '../converters/recipe-converter';
 
 @Component({
   selector: 'app-import-recipe-dialog',
