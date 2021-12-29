@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { toRecipeText, RecipeConverter } from './recipe-converter';
+import { toRecipeText, RecipeConverter } from './converters/recipe-converter';
 import { MatDialog } from '@angular/material/dialog';
 import { ImportRecipeDialogComponent } from './import-recipe-dialog/import-recipe-dialog.component';
 
