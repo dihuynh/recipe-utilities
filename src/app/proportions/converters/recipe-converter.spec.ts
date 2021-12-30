@@ -60,19 +60,41 @@ describe('Recipe converter', () => {
     {text: '1 c sugar', expectedWeight: 200},
     {text: '1.5 cup white sugar', expectedWeight: 300},
     {text: '1.5 cups granulated sugar', expectedWeight: 300},
+    {text: '1 tbs sugar', expectedWeight: 12.5},
+    {text: '1 tablespoon sugar', expectedWeight: 12.5}
   ].forEach((value: {text: string; expectedWeight: number}) => {
-    it('should convert white sugar in cups', () => {
+    it('should convert white sugar', () => {
       const ingredient: Ingredient = getIngredients(value.text);
       expect(ingredient.name).toMatch(new RegExp(/.*sugar*/));
       expect(ingredient.weight).toEqual(value.expectedWeight);
     });
   });
 
+  [
+    {text: '1 c brown sugar', expectedWeight: 216},
+    {text: '1.5 cup packed brown sugar', expectedWeight: 324},
+  ].forEach((value: {text: string; expectedWeight: number}) => {
+    it('should convert brown sugar in cups', () => {
+      const ingredient: Ingredient = getIngredients(value.text);
+      expect(ingredient.name).toContain('brown sugar');
+      expect(ingredient.weight).toEqual(value.expectedWeight);
+    });
+  });
+
+  [
+    {text: '1 c butter', expectedWeight: 227},
+    {text: '2 cups french butter', expectedWeight: 454}
+  ].forEach((value: {text: string; expectedWeight: number}) => {
+    it('should convert flour in cups', () => {
+      const ingredient: Ingredient = getIngredients(value.text);
+      expect(ingredient.name).toContain('butter');
+      expect(ingredient.weight).toEqual(value.expectedWeight);
+    });
+  });
+
   it('should convert multi word ingredient', () => {
     const recipeText = '60g candied orange peel';
-
     const ingredient: Ingredient = getIngredients(recipeText);
-
     expect(ingredient.name).toEqual('candied orange peel');
     expect(ingredient.weight).toEqual(60);
   });

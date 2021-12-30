@@ -1,5 +1,15 @@
 import { IngredientConverter } from './ingredient-converter';
 
+const cupRegex = (ingredient: string) => {
+  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:c|cup|cups)\\s+([\\w-\\s]*'+ ingredient +')';
+  return new RegExp(pattern);
+};
+
+const tbsRegex = (ingredient: string) => {
+  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:tablespoon|tablespoons|tbs)\\s+([\\w-\\s]*'+ ingredient +')';
+  return new RegExp(pattern);
+};
+
 const eggYolkPattern = new RegExp(/(\d+)\s*([egg|eggs]*[\s]*yolk[s]*)/);
 const eggYolkConverter: IngredientConverter = new IngredientConverter(eggYolkPattern, 18);
 
@@ -9,12 +19,16 @@ const wholeEggConverter: IngredientConverter = new IngredientConverter(eggPatter
 const eggWhitePattern = new RegExp(/(\d+)\s*([egg|eggs]* white[s]*)/);
 const eggWhiteConverter: IngredientConverter = new IngredientConverter(eggWhitePattern, 30);
 
-const flourPattern = new RegExp(/^(?!\/)(\d+|\d+\.\d+)\s*(?:c|cup|cups)\s+([\w-\s]*flour)/);
-const flourConverter: IngredientConverter = new IngredientConverter(flourPattern, 120);
+// cups
+const flourConverter: IngredientConverter = new IngredientConverter(cupRegex('flour'), 120);
+const sugarConverter: IngredientConverter = new IngredientConverter(cupRegex('sugar'), 200);
+const brownSugarConverter: IngredientConverter = new IngredientConverter(cupRegex('brown sugar'), 216);
+const butterConverter: IngredientConverter = new IngredientConverter(cupRegex('butter'), 227);
 
-const sugarPattern = new RegExp(/^(?!\/)(\d+|\d+\.\d+)\s*(?:c|cup|cups)\s+([\w-\s]*[white sugar|sugar])/);
-const sugarConverter: IngredientConverter = new IngredientConverter(sugarPattern, 200);
+// tablespoon
+const sugarTbsConverter: IngredientConverter = new IngredientConverter(tbsRegex('sugar'), 12.5);
 
+// base
 const gramPattern = new RegExp(/(\d+)\s*(?:g|gram|grams)\s+([\w\s-]+)/);
 const basicConverter: IngredientConverter = new IngredientConverter(gramPattern, 1);
 
@@ -23,6 +37,9 @@ export const CONVERTERS: IngredientConverter[] = [
   eggWhiteConverter,
   wholeEggConverter,
   flourConverter,
+  butterConverter,
+  brownSugarConverter,
+  sugarTbsConverter,
   sugarConverter,
   basicConverter
 ];
