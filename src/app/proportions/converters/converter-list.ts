@@ -12,6 +12,9 @@ const eggWhiteConverter: IngredientConverter = new IngredientConverter(eggWhiteP
 const flourPattern = new RegExp(/^(?!\/)(\d+|\d+\.\d+)\s*(?:c|cup|cups)\s+([\w-\s]*flour)/);
 const flourConverter: IngredientConverter = new IngredientConverter(flourPattern, 120);
 
+const sugarPattern = new RegExp(/^(?!\/)(\d+|\d+\.\d+)\s*(?:c|cup|cups)\s+([\w-\s]*[white sugar|sugar])/);
+const sugarConverter: IngredientConverter = new IngredientConverter(sugarPattern, 200);
+
 const gramPattern = new RegExp(/(\d+)\s*(?:g|gram|grams)\s+([\w\s-]+)/);
 const basicConverter: IngredientConverter = new IngredientConverter(gramPattern, 1);
 
@@ -20,5 +23,6 @@ export const CONVERTERS: IngredientConverter[] = [
   eggWhiteConverter,
   wholeEggConverter,
   flourConverter,
+  sugarConverter,
   basicConverter
 ];

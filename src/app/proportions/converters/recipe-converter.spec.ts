@@ -56,6 +56,18 @@ describe('Recipe converter', () => {
     });
   });
 
+  [
+    {text: '1 c sugar', expectedWeight: 200},
+    {text: '1.5 cup white sugar', expectedWeight: 300},
+    {text: '1.5 cups granulated sugar', expectedWeight: 300},
+  ].forEach((value: {text: string; expectedWeight: number}) => {
+    it('should convert white sugar in cups', () => {
+      const ingredient: Ingredient = getIngredients(value.text);
+      expect(ingredient.name).toMatch(new RegExp(/.*sugar*/));
+      expect(ingredient.weight).toEqual(value.expectedWeight);
+    });
+  });
+
   it('should convert multi word ingredient', () => {
     const recipeText = '60g candied orange peel';
 
@@ -83,7 +95,11 @@ describe('Recipe converter', () => {
     expect(ingredient.weight).toEqual(18);
   });
 
-  ['2 egg yolks', '2 eggs yolks', '2 yolks'].forEach((line: string) => {
+  [
+    '2 egg yolks',
+    '2 eggs yolks',
+    '2 yolks'
+  ].forEach((line: string) => {
     it('should convert egg yolks into grams', () => {
       const ingredient: Ingredient = getIngredients(line);
       expect(ingredient.name).toEqual(line.substr(2));
@@ -97,7 +113,10 @@ describe('Recipe converter', () => {
     expect(ingredient.weight).toEqual(30);
   });
 
-  ['2 egg whites', '2 eggs white'].forEach((line: string) => {
+  [
+    '2 egg whites',
+    '2 eggs white'
+  ].forEach((line: string) => {
     it('should convert egg whites into grams', () => {
       const ingredient: Ingredient = getIngredients(line);
       expect(ingredient.name).toEqual(line.substr(2));
