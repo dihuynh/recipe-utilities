@@ -1,4 +1,4 @@
-name: Run tests
+name: Run tests and deploy
 on: pull_request
 
 jobs:
@@ -10,7 +10,19 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+
       - name: Install dependencies
         run: npm ci
+
       - name: Run tests
         run: npm run test
+
+      - name: Run deploy
+        run : npm run deploy
+
+      - name: Check in modified files
+        run: |
+          git config --global user.name 'Di Huynh'
+          git config --global user.email 'dihuynh@users.noreply.github.com'
+          git commit -am "Deploy"
+          git push
