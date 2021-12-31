@@ -1,5 +1,13 @@
 import { RecipeConverter } from './recipe-converter';
-import { Ingredient, FLOUR } from '../proportions-datasource';
+import { Ingredient } from '../proportions-datasource';
+
+class TestIngredient {
+  constructor(
+    public line: string,
+    public expectedWeight: number,
+    public expectedName: string){
+    }
+}
 
 describe('Recipe converter', () => {
   const converter: RecipeConverter = new RecipeConverter();
@@ -8,28 +16,40 @@ describe('Recipe converter', () => {
     converter.convertLine(text);
 
   [
-    '50 g flour',
-    '50g flour',
-    '50 grams flour',
-    '50  g  flour'
-  ].forEach((recipeText: string) => {
-    it('should convert text to ingredients', () => {
-      const ingredient: Ingredient = getIngredients(recipeText);
+    new TestIngredient('50 g flour', 50, 'flour'),
+    new TestIngredient('50 grams flour', 50, 'flour'),
+    new TestIngredient('50  g  flour', 50, 'flour'),
+    new TestIngredient('50 grams all-purpose flour', 50, 'all-purpose flour'),
+    new TestIngredient('50 g all-purpose flour', 50, 'all-purpose flour'),
 
-      expect(ingredient.name).toEqual(FLOUR);
-      expect(ingredient.weight).toEqual(50);
-    });
-  });
+    new TestIngredient('3 c all purpose flour', 360, 'all purpose flour'),
+    new TestIngredient('3.5 cup all purpose flour', 420, 'all purpose flour'),
+    new TestIngredient('3.5 cups bread flour', 420, 'bread flour'),
 
-  [
-    '50 grams all-purpose flour',
-    '50 g all-purpose flour'
-  ].forEach((recipeText: string) => {
-    it('should convert text to ingredients', () => {
-      const ingredient: Ingredient = getIngredients(recipeText);
+    new TestIngredient('1 c sugar', 200, 'sugar'),
+    new TestIngredient('1.5 cup white sugar', 300, 'white sugar'),
+    new TestIngredient('1 tbs sugar', 12.5, 'sugar'),
+    new TestIngredient('1 tablespoon sugar', 12.5, 'sugar'),
 
-      expect(ingredient.name).toEqual('all-purpose flour');
-      expect(ingredient.weight).toEqual(50);
+    new TestIngredient('1 c brown sugar', 216, 'brown sugar'),
+    new TestIngredient('1.5 cup packed brown sugar', 324, 'packed brown sugar'),
+
+    new TestIngredient('1 c butter', 227, 'butter'),
+    new TestIngredient('2 cups french butter', 454, 'french butter'),
+
+    new TestIngredient('2 egg whites', 60, 'egg whites'),
+    new TestIngredient('2 eggs white', 60, 'eggs white'),
+    new TestIngredient('2 egg yolks', 36, 'egg yolks'),
+    new TestIngredient('2 eggs yolk', 36, 'eggs yolk'),
+    new TestIngredient('2 yolks', 36, 'yolks'),
+    new TestIngredient('2 eggs', 96, 'eggs'),
+
+    new TestIngredient('60g candied orange peel', 60, 'candied orange peel')
+  ].forEach((value: TestIngredient) => {
+    it(`should convert ${value.line} to ${value.expectedWeight} ${value.expectedName}`, () => {
+      const ingredient: Ingredient = getIngredients(value.line);
+      expect(ingredient.name).toEqual(value.expectedName);
+      expect(ingredient.weight).toEqual(value.expectedWeight);
     });
   });
 
@@ -40,109 +60,6 @@ describe('Recipe converter', () => {
     it('should return a list of ingredients that cant be converted', () => {
       const result: Ingredient= converter.convertLine(inconvertibleText);
       expect(result).toEqual(undefined);
-    });
-  });
-
-  [
-    {text: '3 c all purpose flour', expectedWeight: 360},
-    {text: '3.5 cup all purpose flour', expectedWeight: 420},
-    {text: '3.5 cups allpurpose flour', expectedWeight: 420},
-    {text: '3.5 c all-purpose flour', expectedWeight: 420}
-  ].forEach((value: {text: string; expectedWeight: number}) => {
-    it('should convert flour in cups', () => {
-      const ingredient: Ingredient = getIngredients(value.text);
-      expect(ingredient.name).toMatch(new RegExp(/all[-\s]*purpose\s+flour/));
-      expect(ingredient.weight).toEqual(value.expectedWeight);
-    });
-  });
-
-  [
-    {text: '1 c sugar', expectedWeight: 200},
-    {text: '1.5 cup white sugar', expectedWeight: 300},
-    {text: '1.5 cups granulated sugar', expectedWeight: 300},
-    {text: '1 tbs sugar', expectedWeight: 12.5},
-    {text: '1 tablespoon sugar', expectedWeight: 12.5}
-  ].forEach((value: {text: string; expectedWeight: number}) => {
-    it('should convert white sugar', () => {
-      const ingredient: Ingredient = getIngredients(value.text);
-      expect(ingredient.name).toMatch(new RegExp(/.*sugar*/));
-      expect(ingredient.weight).toEqual(value.expectedWeight);
-    });
-  });
-
-  [
-    {text: '1 c brown sugar', expectedWeight: 216},
-    {text: '1.5 cup packed brown sugar', expectedWeight: 324},
-  ].forEach((value: {text: string; expectedWeight: number}) => {
-    it('should convert brown sugar in cups', () => {
-      const ingredient: Ingredient = getIngredients(value.text);
-      expect(ingredient.name).toContain('brown sugar');
-      expect(ingredient.weight).toEqual(value.expectedWeight);
-    });
-  });
-
-  [
-    {text: '1 c butter', expectedWeight: 227},
-    {text: '2 cups french butter', expectedWeight: 454}
-  ].forEach((value: {text: string; expectedWeight: number}) => {
-    it('should convert flour in cups', () => {
-      const ingredient: Ingredient = getIngredients(value.text);
-      expect(ingredient.name).toContain('butter');
-      expect(ingredient.weight).toEqual(value.expectedWeight);
-    });
-  });
-
-  it('should convert multi word ingredient', () => {
-    const recipeText = '60g candied orange peel';
-    const ingredient: Ingredient = getIngredients(recipeText);
-    expect(ingredient.name).toEqual('candied orange peel');
-    expect(ingredient.weight).toEqual(60);
-  });
-
-  it('should convert a single egg into grams', () => {
-    const ingredient: Ingredient = getIngredients('1 egg');
-    expect(ingredient.name).toEqual('egg');
-    expect(ingredient.weight).toEqual(48);
-  });
-
-  it('should convert multiple eggs into grams', () => {
-    const ingredient: Ingredient = getIngredients('2 eggs');
-    expect(ingredient.name).toEqual('eggs');
-    expect(ingredient.weight).toEqual(96);
-  });
-
-  it('should convert a single egg yolk into grams', () => {
-    const ingredient: Ingredient = getIngredients('1 egg yolk');
-    expect(ingredient.name).toEqual('egg yolk');
-    expect(ingredient.weight).toEqual(18);
-  });
-
-  [
-    '2 egg yolks',
-    '2 eggs yolks',
-    '2 yolks'
-  ].forEach((line: string) => {
-    it('should convert egg yolks into grams', () => {
-      const ingredient: Ingredient = getIngredients(line);
-      expect(ingredient.name).toEqual(line.substr(2));
-      expect(ingredient.weight).toEqual(36);
-    });
-  });
-
-  it('should convert a single egg white into grams', () => {
-    const ingredient: Ingredient = getIngredients('1 egg white');
-    expect(ingredient.name).toEqual('egg white');
-    expect(ingredient.weight).toEqual(30);
-  });
-
-  [
-    '2 egg whites',
-    '2 eggs white'
-  ].forEach((line: string) => {
-    it('should convert egg whites into grams', () => {
-      const ingredient: Ingredient = getIngredients(line);
-      expect(ingredient.name).toEqual(line.substr(2));
-      expect(ingredient.weight).toEqual(60);
     });
   });
 });
