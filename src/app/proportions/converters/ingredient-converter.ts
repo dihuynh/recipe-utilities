@@ -15,7 +15,7 @@ export class IngredientConverter {
   }
 
   public getResult(line: string, result: RegExpMatchArray) {
-    if (result.length < 2) {
+    if (result.length < 2 || Number.isNaN(result[1])) {
       console.log('Cannot convert this line', line);
       return undefined;
     }
