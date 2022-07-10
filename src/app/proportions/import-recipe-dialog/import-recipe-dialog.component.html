@@ -11,19 +11,16 @@
 <div>
   <button mat-raised-button
           color="primary"
-          *ngIf="!error"
           (click)="import()"
           style="margin-right: 10px;">
     Import
   </button>
-  <button mat-raised-button
-          color="primary"
-          *ngIf="error"
-          (click)="clearStatus()">
-    Reset
-  </button>
   <mat-error *ngIf="error">
-    There are ingredients that we can't convert into grams.
-    Please convert it manually, click Reset and then re-import your updated recipe.
+    These ingredients can't be convert into grams. Please convert it manually, and click "Import" again.
+    <div *ngFor="let failedResult of failedResults">
+      <p matLine>
+        <li> {{failedResult}} </li>
+      </p>
+    </div>
   </mat-error>
 </div>
