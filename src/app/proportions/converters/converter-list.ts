@@ -24,6 +24,7 @@ const flourConverter: IngredientConverter = new IngredientConverter(cupRegex('fl
 const sugarConverter: IngredientConverter = new IngredientConverter(cupRegex('sugar'), 200);
 const brownSugarConverter: IngredientConverter = new IngredientConverter(cupRegex('brown sugar'), 216);
 const butterConverter: IngredientConverter = new IngredientConverter(cupRegex('butter'), 227);
+const waterConverter: IngredientConverter = new IngredientConverter(cupRegex('water'), 236);
 
 // tablespoon
 const sugarTbsConverter: IngredientConverter = new IngredientConverter(tbsRegex('sugar'), 12.5);
@@ -41,5 +42,6 @@ export const CONVERTERS: IngredientConverter[] = [
   brownSugarConverter,
   sugarTbsConverter,
   sugarConverter,
+  waterConverter,
   basicConverter
 ];
