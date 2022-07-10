@@ -23,3 +23,6 @@ export const toRecipeText =
     .map((ing: Ingredient) => `${ing.percentage}%, ${ing.weight}g ${ing.name}`)
     .join('\n');
 
+
+export const toIngredientText =
+(ing: Ingredient): string => `${ing.weight}g ${ing.name}`;

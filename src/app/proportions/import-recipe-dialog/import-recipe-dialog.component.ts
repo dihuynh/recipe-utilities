@@ -1,8 +1,9 @@
+import { toIngredientText } from './../converters/recipe-converter';
 import { Ingredient } from './../proportions-datasource';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { RecipeConverter } from '../converters/recipe-converter';
+import { RecipeConverter, toRecipeText } from '../converters/recipe-converter';
 
 @Component({
   selector: 'app-import-recipe-dialog',
@@ -14,6 +15,7 @@ export class ImportRecipeDialogComponent implements OnInit {
   public recipeText: FormControl = new FormControl();
   public result: string;
   public error: boolean;
+  public failedResults: string[] = [];
   private converter: RecipeConverter = new RecipeConverter();
   private rawRecipeInput: string;
 
@@ -29,19 +31,20 @@ export class ImportRecipeDialogComponent implements OnInit {
 
   public import(): void {
     this.error = false;
+    this.failedResults = [];
     const recipeToImport = this.recipeText.value;
     this.rawRecipeInput = recipeToImport;
-    const recipeLines: string[] = recipeToImport.split('\n');
+    const recipeLines: string[] = recipeToImport.split('\n').filter(line => line.trim().length !== 0);
     const lineResult: string[] = [];
     const ingredients: Ingredient[] = [];
     recipeLines.forEach((line: string) => {
       const convertedLine: Ingredient = this.converter.convertLine(line);
       const valid: boolean = convertedLine ? true : false;
       if (valid) {
-        lineResult.push(`✅ ${line}`);
+        lineResult.push(toIngredientText(convertedLine));
         ingredients.push(convertedLine);
       } else {
-        lineResult.push(`❌ ${line}`);
+        this.failedResults.push(line);
         this.error = true;
       }
     });

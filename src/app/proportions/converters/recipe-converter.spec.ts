@@ -44,6 +44,8 @@ describe('Recipe converter', () => {
     new TestIngredient('2 yolks', 36, 'yolks'),
     new TestIngredient('2 eggs', 96, 'eggs'),
 
+    new TestIngredient('1 c water', 236, 'water'),
+
     new TestIngredient('60g candied orange peel', 60, 'candied orange peel')
   ].forEach((value: TestIngredient) => {
     it(`should convert ${value.line} to ${value.expectedWeight} ${value.expectedName}`, () => {
