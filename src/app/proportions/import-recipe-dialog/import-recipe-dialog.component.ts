@@ -3,12 +3,11 @@ import { Ingredient } from './../proportions-datasource';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { RecipeConverter, toRecipeText } from '../converters/recipe-converter';
+import { RecipeConverter } from '../converters/recipe-converter';
 
 @Component({
   selector: 'app-import-recipe-dialog',
-  templateUrl: './import-recipe-dialog.component.html',
-  styleUrls: ['./import-recipe-dialog.component.css']
+  templateUrl: './import-recipe-dialog.component.html'
 })
 export class ImportRecipeDialogComponent implements OnInit {
 

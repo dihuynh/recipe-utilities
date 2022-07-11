@@ -1,6 +1,8 @@
+import { ImportRecipesToCompareComponent } from './import-recipes-to-compare/import-recipes-to-compare.component';
 import { Ingredient, CompareIngredient } from './../proportions/proportions-datasource';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-compare',
@@ -10,7 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class CompareComponent implements OnInit {
   displayedColumns = ['name', 'recipe 1', 'recipe 2', 'diff'];
   public dataSource: MatTableDataSource<CompareIngredient>;
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
     const data: CompareIngredient[] = [
@@ -24,9 +26,13 @@ export class CompareComponent implements OnInit {
         name: 'salt',
         percentage1: '20%',
         percentage2: '20%',
-        diff: '10%'
+        diff: '0%'
       },
     ];
     this.dataSource = new MatTableDataSource(data);
+    const dialogRef = this.dialog.open(ImportRecipesToCompareComponent, {
+        height: '400px',
+        width: '800px'
+    });
   }
 }

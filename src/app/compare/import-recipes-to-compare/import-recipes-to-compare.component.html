@@ -1,0 +1,42 @@
+<div layout="row"
+     layout-wrap>
+  <mat-form-field fxFlex="50" [style.margin-right]="'10px'">
+    <mat-label>Enter recipe 1</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="10"
+              cdkAutosizeMaxRows="50"
+              [formControl]="recipe1Text"></textarea>
+  </mat-form-field>
+  <mat-form-field fxFlex="50">
+    <mat-label>Enter recipe 2</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="10"
+              cdkAutosizeMaxRows="50"
+              [formControl]="recipe2Text"></textarea>
+  </mat-form-field>
+</div>
+<div>
+  <button mat-raised-button
+          color="primary"
+          (click)="compare()"
+          style="margin-right: 10px;">
+    Compare
+  </button>
+  <mat-error *ngIf="error">
+    These ingredients can't be convert into grams. Please convert them manually, and click "Compare" again.
+    <div>From recipe 1:</div>
+    <div *ngFor="let failedResult of recipe1Result.failedResults">
+      <p matLine>
+        <li> {{failedResult}} </li>
+      </p>
+    </div>
+    <div>From recipe 2:</div>
+    <div *ngFor="let failedResult of recipe2Result.failedResults">
+      <p matLine>
+        <li> {{failedResult}} </li>
+      </p>
+    </div>
+  </mat-error>
+</div>
