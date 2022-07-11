@@ -4,6 +4,13 @@ export interface Ingredient {
   percentage?: string;
 }
 
+export interface CompareIngredient {
+  name: string;
+  percentage1: string;
+  percentage2: string;
+  diff: string;
+}
+
 export interface Preset {
   name: string;
   recipe: Ingredient[];

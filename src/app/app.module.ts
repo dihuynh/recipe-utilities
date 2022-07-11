@@ -23,6 +23,7 @@ import { TrackerPageComponent } from './tracker-page/tracker-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImportRecipeDialogComponent } from './proportions/import-recipe-dialog/import-recipe-dialog.component';
+import { CompareComponent } from './compare/compare.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ImportRecipeDialogComponent } from './proportions/import-recipe-dialog/
     ProportionsComponent,
     SourdoughTrackerComponent,
     TrackerPageComponent,
-    ImportRecipeDialogComponent
+    ImportRecipeDialogComponent,
+    CompareComponent
   ],
   imports: [
     MatStepperModule,
