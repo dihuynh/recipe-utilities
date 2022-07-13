@@ -1,0 +1,44 @@
+<h1 class="mat-h1">Compare</h1>
+<div style="margin-left: 20px;">
+  <button mat-raised-button
+          color="primary"
+          (click)="compare()"
+          style="margin-bottom: 10px; margin-right: 10px;">
+    + Compare
+  </button>
+  <div fxLayout="row"
+       fxLayout.xs="column"
+       fxFlexFill
+       fxLayoutGap="12px">
+    <div fxFlex="50"
+         fxFlex.xs="55">
+
+      <mat-table class="full-width-table mat-elevation-z2"
+                 style="margin-bottom: 10px"
+                 aria-label="Elements"
+                 [dataSource]="dataSource">
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="recipe 1">
+          <mat-header-cell *matHeaderCellDef>Recipe 1</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.percentage1}}% </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="recipe 2">
+          <mat-header-cell *matHeaderCellDef>Recipe 2</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.percentage2}}% </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="diff">
+          <mat-header-cell *matHeaderCellDef>Diff</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.diff}}% </mat-cell>
+        </ng-container>
+      </mat-table>
+    </div>
+  </div>
+</div>

@@ -33,7 +33,6 @@ export class ProportionsComponent implements OnInit {
 
   private ingredientsAtBaseScale: Map<string, number> = new Map();
   private flourFormGroup: FormGroup = new FormGroup({});
-  private converter: RecipeConverter = new RecipeConverter();
 
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
   }

@@ -23,6 +23,9 @@ import { TrackerPageComponent } from './tracker-page/tracker-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImportRecipeDialogComponent } from './proportions/import-recipe-dialog/import-recipe-dialog.component';
+import { CompareComponent } from './compare/compare.component';
+import { ImportRecipesToCompareComponent } from './compare/import-recipes-to-compare/import-recipes-to-compare.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -31,7 +34,9 @@ import { ImportRecipeDialogComponent } from './proportions/import-recipe-dialog/
     ProportionsComponent,
     SourdoughTrackerComponent,
     TrackerPageComponent,
-    ImportRecipeDialogComponent
+    ImportRecipeDialogComponent,
+    ImportRecipesToCompareComponent,
+    CompareComponent
   ],
   imports: [
     MatStepperModule,
@@ -52,6 +57,7 @@ import { ImportRecipeDialogComponent } from './proportions/import-recipe-dialog/
     MatListModule,
     FlexLayoutModule,
     MatSortModule,
+    MatGridListModule,
     CdTimerModule
   ],
   exports: [ReactiveFormsModule],

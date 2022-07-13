@@ -1,3 +1,4 @@
+import { CompareComponent } from './compare/compare.component';
 import { AlarmService } from 'src/app/services/alarm.service';
 import { TrackerPageComponent } from './tracker-page/tracker-page.component';
 import { NgModule } from '@angular/core';
@@ -6,7 +7,8 @@ import { ProportionsComponent } from './proportions/proportions.component';
 
 const routes: Routes = [
   { path: 'proportions', component: ProportionsComponent },
-  { path: 'tracker', component: TrackerPageComponent }
+  { path: 'tracker', component: TrackerPageComponent },
+  { path: 'compare', component: CompareComponent }
 ];
 
 @NgModule({
