@@ -1,6 +1,11 @@
 <h1 class="mat-h1">Compare</h1>
 <div style="margin-left: 20px;">
-
+  <button mat-raised-button
+          color="primary"
+          (click)="compare()"
+          style="margin-bottom: 10px; margin-right: 10px;">
+    + Compare
+  </button>
   <div fxLayout="row"
        fxLayout.xs="column"
        fxFlexFill
@@ -23,15 +28,15 @@
 
         <ng-container matColumnDef="recipe 1">
           <mat-header-cell *matHeaderCellDef>Recipe 1</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.percentage1}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.percentage1}}% </mat-cell>
         </ng-container>
         <ng-container matColumnDef="recipe 2">
           <mat-header-cell *matHeaderCellDef>Recipe 2</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.percentage2}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.percentage2}}% </mat-cell>
         </ng-container>
         <ng-container matColumnDef="diff">
           <mat-header-cell *matHeaderCellDef>Diff</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.diff}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.diff}}% </mat-cell>
         </ng-container>
       </mat-table>
     </div>

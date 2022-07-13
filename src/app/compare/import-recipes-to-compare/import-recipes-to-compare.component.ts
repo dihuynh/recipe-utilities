@@ -33,11 +33,12 @@ export class ImportRecipesToCompareComponent implements OnInit {
     this.recipe2Result = this.processRecipeText(this.recipe2Text.value);
     this.recipe1Text.setValue(this.recipe1Result.convertedRecipe);
     this.recipe2Text.setValue(this.recipe2Result.convertedRecipe);
-    this.error = this.recipe1Result.failedResults.length > 0 || this.recipe2Result.failedResults.length > 0;
+    this.error = this.recipe1Result.failedResults.length > 0
+      || this.recipe2Result.failedResults.length > 0;
     if (!this.error) {
       this.dialogRef.close({
         recipe1: this.recipe1Result.ingredients,
-        recipe2: this.recipe1Result.ingredients,
+        recipe2: this.recipe2Result.ingredients,
       });
     }
   }
