@@ -45,10 +45,12 @@ describe('Recipe converter', () => {
     new TestIngredient('2 eggs', 96, 'eggs'),
 
     new TestIngredient('1 c water', 236, 'water'),
+    new TestIngredient('1 ml water', 1, 'water'),
+    new TestIngredient('10 ml milk', 10, 'milk'),
 
     new TestIngredient('60g candied orange peel', 60, 'candied orange peel')
   ].forEach((value: TestIngredient) => {
-    it(`should convert ${value.line} to ${value.expectedWeight} ${value.expectedName}`, () => {
+    fit(`should convert ${value.line} to ${value.expectedWeight} ${value.expectedName}`, () => {
       const ingredient: Ingredient = getIngredients(value.line);
       expect(ingredient.name).toEqual(value.expectedName);
       expect(ingredient.weight).toEqual(value.expectedWeight);

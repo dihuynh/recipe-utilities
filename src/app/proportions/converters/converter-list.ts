@@ -10,12 +10,11 @@ const tbsRegex = (ingredient: string) => {
   return new RegExp(pattern);
 };
 
+// eggs
 const eggYolkPattern = new RegExp(/(\d+)\s*([egg|eggs]*[\s]*yolk[s]*)/);
 const eggYolkConverter: IngredientConverter = new IngredientConverter(eggYolkPattern, 18);
-
 const eggPattern = new RegExp(/(\d+)\s+(egg[s]*)/);
 const wholeEggConverter: IngredientConverter = new IngredientConverter(eggPattern, 48);
-
 const eggWhitePattern = new RegExp(/(\d+)\s*([egg|eggs]* white[s]*)/);
 const eggWhiteConverter: IngredientConverter = new IngredientConverter(eggWhitePattern, 30);
 
@@ -28,6 +27,9 @@ const waterConverter: IngredientConverter = new IngredientConverter(cupRegex('wa
 
 // tablespoon
 const sugarTbsConverter: IngredientConverter = new IngredientConverter(tbsRegex('sugar'), 12.5);
+
+const mlPattern = new RegExp(/(\d+)\s*(?:ml)\s+([\w\s-]+)/);
+const mlConverter: IngredientConverter = new IngredientConverter(mlPattern, 1);
 
 // base
 const gramPattern = new RegExp(/(\d+)\s*(?:g|gram|grams)\s+([\w\s-]+)/);
@@ -43,5 +45,6 @@ export const CONVERTERS: IngredientConverter[] = [
   sugarTbsConverter,
   sugarConverter,
   waterConverter,
+  mlConverter,
   basicConverter
 ];
