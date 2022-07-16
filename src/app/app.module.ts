@@ -26,6 +26,7 @@ import { ImportRecipeDialogComponent } from './proportions/import-recipe-dialog/
 import { CompareComponent } from './compare/compare.component';
 import { ImportRecipesToCompareComponent } from './compare/import-recipes-to-compare/import-recipes-to-compare.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     CompareComponent
   ],
   imports: [
+    MatTabsModule,
     MatStepperModule,
     MatIconModule,
     BrowserModule,

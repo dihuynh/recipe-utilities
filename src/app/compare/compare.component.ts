@@ -15,19 +15,18 @@ export class CompareComponent implements OnInit {
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  compare() {
     let data: CompareIngredient[] = [];
-    const dialogRef = this.compare();
+    const dialogRef = this.dialog.open(ImportRecipesToCompareComponent, {
+        height: '400px',
+        width: '800px'
+    });
     dialogRef.afterClosed().subscribe((recipes: RecipesToCompare) => {
       data = this.setIngredientsToCompare(recipes);
       this.dataSource = new MatTableDataSource(data);
    });
-  }
-
-  compare(): MatDialogRef<ImportRecipesToCompareComponent, RecipesToCompare>  {
-    return this.dialog.open(ImportRecipesToCompareComponent, {
-        height: '400px',
-        width: '800px'
-    });
   }
 
   public setIngredientsToCompare(recipes: RecipesToCompare): CompareIngredient[] {
