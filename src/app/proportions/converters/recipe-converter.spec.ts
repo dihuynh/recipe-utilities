@@ -46,6 +46,14 @@ describe('Recipe converter', () => {
 
     new TestIngredient('1 c water', 236, 'water'),
 
+    new TestIngredient('1 teaspoon baking soda', 4, 'baking soda'),
+    new TestIngredient('2 tsp baking powder', 8, 'baking powder'),
+    new TestIngredient('3 tsp baking soda', 12, 'baking soda'),
+
+    new TestIngredient('4 tsp salt', 12, 'salt'),
+    new TestIngredient('1 tablespoon salt', 10, 'salt'),
+    new TestIngredient('2 tbs salt', 20, 'salt'),
+
     new TestIngredient('60g candied orange peel', 60, 'candied orange peel')
   ].forEach((value: TestIngredient) => {
     it(`should convert ${value.line} to ${value.expectedWeight} ${value.expectedName}`, () => {
