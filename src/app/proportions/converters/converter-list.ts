@@ -6,7 +6,12 @@ const cupRegex = (ingredient: string) => {
 };
 
 const tbsRegex = (ingredient: string) => {
-  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:tablespoon|tablespoons|tbs)\\s+([\\w-\\s]*'+ ingredient +')';
+  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:tablespoon|tablespoons|tbs)\\s+('+ ingredient +')';
+  return new RegExp(pattern);
+};
+
+const tspRegex = (ingredient: string) => {
+  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:teaspoon|teaspoons|tsp)\\s+('+ ingredient +')';
   return new RegExp(pattern);
 };
 
@@ -28,6 +33,12 @@ const waterConverter: IngredientConverter = new IngredientConverter(cupRegex('wa
 
 // tablespoon
 const sugarTbsConverter: IngredientConverter = new IngredientConverter(tbsRegex('sugar'), 12.5);
+const saltTbsConverter: IngredientConverter = new IngredientConverter(tbsRegex('salt'), 10);
+
+// teaspoon
+const bakingPowderTspConverter: IngredientConverter = new IngredientConverter(tspRegex('baking powder'), 4);
+const bakingSodaTspConverter: IngredientConverter = new IngredientConverter(tspRegex('baking soda'), 4);
+const saltTspConverter: IngredientConverter = new IngredientConverter(tspRegex('salt'), 3);
 
 // base
 const gramPattern = new RegExp(/(\d+)\s*(?:g|gram|grams)\s+([\w\s-]+)/);
@@ -42,6 +53,10 @@ export const CONVERTERS: IngredientConverter[] = [
   brownSugarConverter,
   sugarTbsConverter,
   sugarConverter,
+  bakingPowderTspConverter,
+  bakingSodaTspConverter,
+  saltTbsConverter,
+  saltTspConverter,
   waterConverter,
   basicConverter
 ];
