@@ -58,6 +58,7 @@ describe('Recipe converter', () => {
   ].forEach((value: TestIngredient) => {
     it(`should convert ${value.line} to ${value.expectedWeight} ${value.expectedName}`, () => {
       const ingredient: Ingredient = getIngredients(value.line);
+      expect(ingredient).toBeTruthy();
       expect(ingredient.name).toEqual(value.expectedName);
       expect(ingredient.weight).toEqual(value.expectedWeight);
     });

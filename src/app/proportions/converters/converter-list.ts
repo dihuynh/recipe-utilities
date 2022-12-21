@@ -6,7 +6,7 @@ const cupRegex = (ingredient: string) => {
 };
 
 const tbsRegex = (ingredient: string) => {
-  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:tablespoon|tablespoons|tbs)\\s+([\\w-\\s]*'+ ingredient +')';
+  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:tablespoon|tablespoons|tbs)\\s+('+ ingredient +')';
   return new RegExp(pattern);
 };
 
@@ -55,6 +55,8 @@ export const CONVERTERS: IngredientConverter[] = [
   sugarConverter,
   bakingPowderTspConverter,
   bakingSodaTspConverter,
+  saltTbsConverter,
+  saltTspConverter,
   waterConverter,
   basicConverter
 ];
