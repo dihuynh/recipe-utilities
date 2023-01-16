@@ -9,7 +9,7 @@ class TestIngredient {
     }
 }
 
-fdescribe('Recipe converter', () => {
+describe('Recipe converter', () => {
   const converter: RecipeConverter = new RecipeConverter();
 
   const getIngredients = (text: string): Ingredient =>
