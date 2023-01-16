@@ -43,6 +43,7 @@ describe('Recipe converter', () => {
     new TestIngredient('2 eggs yolk', 36, 'eggs yolk'),
     new TestIngredient('2 yolks', 36, 'yolks'),
     new TestIngredient('2 eggs', 96, 'eggs'),
+    new TestIngredient('2 large eggs', 96, 'eggs'),
 
     new TestIngredient('1 c water', 236, 'water'),
 
@@ -65,12 +66,23 @@ describe('Recipe converter', () => {
   });
 
   [
-    '1/2 c all purpose flour',
     '2 oz eggs'
   ].forEach((inconvertibleText: string) => {
     it('should return a list of ingredients that cant be converted', () => {
       const result: Ingredient= converter.convertLine(inconvertibleText);
       expect(result).toEqual(undefined);
+    });
+  });
+
+  [
+    new TestIngredient('1/2 c flour', 60, 'flour'),
+    new TestIngredient('2 1/4 C flour', 270, 'flour'),
+  ].forEach((value: TestIngredient) => {
+    it(`should convert fractions ${value.line} to ${value.expectedWeight} ${value.expectedName}`, () => {
+      const ingredient: Ingredient = getIngredients(value.line);
+      expect(ingredient).toBeTruthy();
+      expect(ingredient.name).toEqual(value.expectedName);
+      expect(ingredient.weight).toEqual(value.expectedWeight);
     });
   });
 });
