@@ -1,7 +1,7 @@
 import { IngredientConverter } from './ingredient-converter';
 
 const cupRegex = (ingredient: string) => {
-  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:c|cup|cups)\\s+([\\w-\\s]*'+ ingredient +')';
+  const pattern = '^(?!\/)(\\d+|\\d+\\.\\d+)\\s*(?:c|C|cup|cups)\\s+([\\w-\\s]*'+ ingredient +')';
   return new RegExp(pattern);
 };
 
@@ -18,7 +18,7 @@ const tspRegex = (ingredient: string) => {
 const eggYolkPattern = new RegExp(/(\d+)\s*([egg|eggs]*[\s]*yolk[s]*)/);
 const eggYolkConverter: IngredientConverter = new IngredientConverter(eggYolkPattern, 18);
 
-const eggPattern = new RegExp(/(\d+)\s+(egg[s]*)/);
+const eggPattern = new RegExp(/(\d+)\s+[large\s]*(egg[s]*)/);
 const wholeEggConverter: IngredientConverter = new IngredientConverter(eggPattern, 48);
 
 const eggWhitePattern = new RegExp(/(\d+)\s*([egg|eggs]* white[s]*)/);
@@ -30,6 +30,7 @@ const sugarConverter: IngredientConverter = new IngredientConverter(cupRegex('su
 const brownSugarConverter: IngredientConverter = new IngredientConverter(cupRegex('brown sugar'), 216);
 const butterConverter: IngredientConverter = new IngredientConverter(cupRegex('butter'), 227);
 const waterConverter: IngredientConverter = new IngredientConverter(cupRegex('water'), 236);
+const milkConverter: IngredientConverter = new IngredientConverter(cupRegex('milk'), 240);
 
 // tablespoon
 const sugarTbsConverter: IngredientConverter = new IngredientConverter(tbsRegex('sugar'), 12.5);
@@ -58,5 +59,6 @@ export const CONVERTERS: IngredientConverter[] = [
   saltTbsConverter,
   saltTspConverter,
   waterConverter,
+  milkConverter,
   basicConverter
 ];
