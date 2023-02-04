@@ -1,3 +1,8 @@
+export interface Recipe {
+  ingredients: Ingredient[];
+  baseIngredient: Ingredient;
+}
+
 export interface Ingredient {
   name: string;
   weight: number;

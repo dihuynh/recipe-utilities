@@ -1,5 +1,5 @@
 import { ImportRecipesToCompareComponent, RecipesToCompare } from './import-recipes-to-compare/import-recipes-to-compare.component';
-import { Ingredient, CompareIngredient, FLOUR } from './../proportions/proportions-datasource';
+import { Ingredient, CompareIngredient, FLOUR } from '../proportions/proportions-datasource';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';

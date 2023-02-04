@@ -1,26 +1,36 @@
 <div>
-  <mat-form-field fxFlex="100">
-    <mat-label>Enter your recipe</mat-label>
-    <textarea matInput
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="10"
-              cdkAutosizeMaxRows="50"
-              [formControl]="recipeText"></textarea>
-  </mat-form-field>
+    <div>
+        <mat-form-field fxFlex="100">
+            <mat-label>Enter your recipe</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      cdkAutosizeMinRows="10"
+                      cdkAutosizeMaxRows="50"
+                      [formControl]="recipeText"></textarea>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>What is your base ingredient</mat-label>
+            <input id="base-ingredient"
+                   matInput
+                   [formControl]="baseIngredient">
+        </mat-form-field>
+    </div>
 </div>
 <div>
-  <button mat-raised-button
-          color="primary"
-          (click)="import()"
-          style="margin-right: 10px;">
-    Import
-  </button>
-  <mat-error *ngIf="error">
-    These ingredients can't be convert into grams. Please convert them manually, and click "Import" again.
-    <div *ngFor="let failedResult of failedResults">
-      <p matLine>
-        <li> {{failedResult}} </li>
-      </p>
-    </div>
-  </mat-error>
+    <button mat-raised-button
+            color="primary"
+            (click)="import()"
+            style="margin-right: 10px;">
+        Import
+    </button>
+    <mat-error *ngIf="error">
+        These ingredients can't be convert into grams. Please convert them manually, and click "Import" again.
+        <div *ngFor="let failedResult of failedResults">
+            <p matLine>
+            <li> {{failedResult}} </li>
+            </p>
+        </div>
+    </mat-error>
 </div>

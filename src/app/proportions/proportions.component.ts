@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ingredient, FLOUR, PRESETS, Preset } from './proportions-datasource';
+import {Ingredient, FLOUR, PRESETS, Preset, Recipe} from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { toRecipeText, RecipeConverter } from './converters/recipe-converter';
@@ -70,8 +70,8 @@ export class ProportionsComponent implements OnInit {
         height: '400px',
         width: '600px'
     });
-    dialogRef.afterClosed().subscribe((ingredients: Ingredient[]) => {
-      this.setIngredients(ingredients);
+    dialogRef.afterClosed().subscribe((recipe: Recipe) => {
+      this.setIngredients(recipe.ingredients);
     });
   }
 
