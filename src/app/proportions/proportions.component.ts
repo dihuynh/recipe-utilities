@@ -67,7 +67,7 @@ export class ProportionsComponent implements OnInit {
 
   public import(): void {
     const dialogRef = this.dialog.open(ImportRecipeDialogComponent, {
-        height: '400px',
+        height: 'auto',
         width: '600px'
     });
     dialogRef.afterClosed().subscribe((recipe: Recipe) => {

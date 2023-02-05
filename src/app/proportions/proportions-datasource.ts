@@ -1,6 +1,6 @@
 export interface Recipe {
   ingredients: Ingredient[];
-  baseIngredient: Ingredient;
+  baseIngredientName: string;
 }
 
 export interface Ingredient {
