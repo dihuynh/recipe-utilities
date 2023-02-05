@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Ingredient, FLOUR, PRESETS, Preset, Recipe} from './proportions-datasource';
+import {Ingredient, FLOUR, Recipe, SOURDOUGH_RECIPE} from './proportions-datasource';
 import { FormControl, FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { toRecipeText, RecipeConverter } from './converters/recipe-converter';
@@ -9,10 +9,6 @@ import { ImportRecipeDialogComponent } from './import-recipe-dialog/import-recip
 export interface IngredientFormValue {
   name: string;
   weight: number;
-}
-
-export interface FormGroupValue {
-  array: IngredientFormValue[];
 }
 
 @Component({
@@ -26,10 +22,8 @@ export class ProportionsComponent implements OnInit {
   displayedColumns = ['name', 'weight', 'percentage'];
   public scaleFormControl = new FormControl(1);
   public ingredientsFormArray: FormArray;
-  public presetFormControl: FormControl = new FormControl();
   public formGroup: FormGroup;
   public recipeText: FormControl = new FormControl();
-  public presets: Preset[] = PRESETS;
 
   private ingredientsAtBaseScale: Map<string, number> = new Map();
   private flourFormGroup: FormGroup = new FormGroup({});
@@ -40,13 +34,11 @@ export class ProportionsComponent implements OnInit {
   ngOnInit() {
     this.ingredientsFormArray = this.fb.array([], { updateOn: 'blur' });
     this.formGroup = this.fb.group({
-      array: this.ingredientsFormArray,
-      preset: this.presetFormControl
+      array: this.ingredientsFormArray
     });
-    this.updateWhenPresetChanges();
     this.updateWhenScaleChanges();
     this.updateWhenWeightChanges();
-    this.presetFormControl.setValue([PRESETS[0]]);
+    this.setIngredients(SOURDOUGH_RECIPE);
   }
 
   public add(): void {
@@ -94,12 +86,6 @@ export class ProportionsComponent implements OnInit {
       this.ingredientsFormArray.controls.forEach((group: FormGroup) => {
         group.controls['weight'].setValue(this.ingredientsAtBaseScale.get(group.controls['name'].value) * scale);
       });
-    });
-  }
-
-  private updateWhenPresetChanges() {
-    this.presetFormControl.valueChanges.subscribe((newPreset: Preset[]) => {
-      this.setIngredients(newPreset[0].recipe);
     });
   }
 
